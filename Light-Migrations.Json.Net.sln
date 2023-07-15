@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Runtime", "Light-Migrations.Runtime\Light-Migrations.Runtime.csproj", "{CAC17720-E550-4733-9E71-F69B06A6349C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Tests", "Light-Migrations.Tests\Light-Migrations.Tests.csproj", "{A4890558-9BF4-4FAD-A947-FDE5C57079CD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAC17720-E550-4733-9E71-F69B06A6349C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC17720-E550-4733-9E71-F69B06A6349C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC17720-E550-4733-9E71-F69B06A6349C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC17720-E550-4733-9E71-F69B06A6349C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4890558-9BF4-4FAD-A947-FDE5C57079CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4890558-9BF4-4FAD-A947-FDE5C57079CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4890558-9BF4-4FAD-A947-FDE5C57079CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4890558-9BF4-4FAD-A947-FDE5C57079CD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
