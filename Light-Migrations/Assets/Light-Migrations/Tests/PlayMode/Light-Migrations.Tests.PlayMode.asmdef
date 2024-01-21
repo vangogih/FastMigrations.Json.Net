@@ -4,8 +4,7 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Light-Migrations.Runtime",
-        "Responsible"
+        "Light-Migrations.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
