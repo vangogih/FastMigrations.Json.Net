@@ -3,73 +3,66 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace Light_Migrations.Tests.EditorMode
 {
-    public class PersonV1
+    public interface IMigratable
     {
-        [JsonProperty("name")] public string Name;
-        [JsonProperty("age")] public int Age;
-    }
-    
-    public class PersonV2
-    {
-        [JsonProperty("name")] public string Name;
-        [JsonProperty("surname")] public string Surname;
-        [JsonProperty("age")] public int Age;
-        
-        // Dictionary<int, Dictionary<string, HashSet<int>>> 
-        public Dictionary<Guid, List<(string, HashSet<int>)>> test;
+        [JsonProperty("Version", Required = Required.Always)]
+        int Version { get; }
+
+        JObject Migrate(JObject jsonObj, int from, int to);
     }
 
-    public class Person
+    public class PersonV1 : IMigratable
     {
+        public int Version { get; private set; } = 1;
+        
+        [NonSerialized]
+        public bool IsMigrationCalled;
+
         [JsonProperty("name")] public string Name;
-        [JsonProperty("surname")] public string Surname;
-        [JsonProperty("bornDate")] public DateTime BornDate;
+        [JsonProperty("age")] public int Age;
+        public JObject Migrate(JObject jsonObj, int from, int to)
+        {
+            IsMigrationCalled = true;
+            return null;
+        }
     }
 
     public sealed class Migrator : JsonConverter
     {
         public override bool CanRead => true;
+
         public override bool CanWrite => false;
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) { }
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+        }
 
-        public override object ReadJson(JsonReader reader, System.Type objectType, object existingValue,
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
-            if (objectType != typeof(Person))
-                return existingValue;
-
-            var jPerson = JObject.Load(reader);
-            var name = jPerson["name"]!.ToObject<string>();
-
-            string[] nameSplit = name.Split(' ');
-
-            if (nameSplit.Length > 1)
+            var jObject = JObject.Load(reader);
+            var versionToken = jObject["Version"];
+            int versionValue;
+            var instance = (IMigratable) Activator.CreateInstance(objectType);
+            
+            if (versionToken == null)
             {
-                jPerson["name"] = nameSplit[0];
-
-                if (jPerson.Property("surname") == null)
-                    jPerson.Add("surname", nameSplit[1]);
-                else
-                    jPerson["surname"] = nameSplit[1];
+                jObject.Add("Version" , instance.Version);
+                versionValue = instance.Version;
             }
+            else
+                versionValue = versionToken.ToObject<int>();
 
-            if (jPerson.Property("bornDate") == null)
-            {
-                var age = jPerson["age"].ToObject<int>();
-                jPerson["bornDate"] = DateTime.Now.AddYears(-age);
-            }
+            jObject = instance.Migrate(jObject, versionValue, instance.Version);
 
-            return jPerson.ToObject<Person>();
+            return jObject.ToObject(objectType);
         }
 
-        public override bool CanConvert(System.Type objectType)
-        {
-            return true;
-        }
+        public override bool CanConvert(Type objectType) => objectType.IsInstanceOfType(typeof(IMigratable));
     }
 
     public sealed class ExampleBddTest
@@ -80,96 +73,29 @@ namespace Light_Migrations.Tests.EditorMode
         private string _v3;
 
         [Test]
-        public void NotToDo()
+        public void Migration_Test()
         {
-            var from = JsonConvert.DeserializeObject<PersonV1>(_v1);
-            var to = new PersonV2
-            { 
-                Name = from.Name.Split(' ')[0], 
-                Surname = from.Name.Split(' ')[1], 
-                Age = from.Age 
-            };
-            var json = JsonConvert.SerializeObject(to);
-            
-            //File.WriteAllText("path", json);
+            // given => json with field Version
+            var json = @"{""name"":""John Doe"",""age"":33,""Version"":1}";
+
+            // when => deserialize json we run migrator
+            var migrator = new Migrator();
+            var person = JsonConvert.DeserializeObject<PersonV1>(json, migrator);
+
+            // then => we call migrator method
+            Assert.NotNull(person);
+            Assert.IsTrue(person.IsMigrationCalled);
         }
 
-        [Test]
-        public void Migration_v1Tov2()
+        [TearDown]
+        public void TearDown()
         {
-            Assert.DoesNotThrow(() => JsonConvert.DeserializeObject<Person>(_v1));
-
-            // Expected
-            var expectedName = "John";
-            var expectedSurname = "Doe";
-
-            // Actual
-            var actual = JsonConvert.DeserializeObject<Person>(_v1, _setting);
-            var actualName = actual.Name;
-            var actualSurname = actual.Surname;
-
-            Assert.AreEqual(expectedName, actualName);
-            Assert.AreEqual(expectedSurname, actualSurname);
         }
-        
-        [Test]
-        public void Migration_v2Tov3()
-        {
-            Assert.IsNotNull(JsonConvert.DeserializeObject<Person>(_v2));
-
-            // Expected
-            var expectedName = "John";
-            var expectedSurname = "Doe";
-            var expectedBurnDate = DateTime.Now.AddYears(-33);
-
-            // Actual
-            var actual = JsonConvert.DeserializeObject<Person>(_v2, _setting);
-            var actualName = actual.Name;
-            var actualSurname = actual.Surname;
-            var actualBurnDate = actual.BornDate;
-
-            Assert.AreEqual(expectedName, actualName);
-            Assert.AreEqual(expectedSurname, actualSurname);
-            Assert.AreEqual(expectedBurnDate, actualBurnDate);
-        }
-
-        [TearDown] public void TearDown() { }
 
         [SetUp]
         public void SetUp()
         {
-            _setting = new JsonSerializerSettings { Converters = new List<JsonConverter> { new Migrator() } };
-
-            /*
- * json schema v1
- * {
- *  "name": "string",
- *  "age": "int32"
- * }
- */
-            _v1 = @"{""name"":""John Doe"",""age"":33}";
-
-            /*
-             * json schema v2
-             * {
-             * "name": "string",
-             * "surname": "string",
-             * "age": "int32"
-             * }
-             */
-
-            _v2 = @"{""name"":""John"", ""surname"":""Doe"",""age"":""33""}";
-
-            /*
-             * json schema v3
-             * {
-             * "name": "string",
-             * "surname": "string",
-             * "burnDate": "DateTime"
-             * }
-             */
-
-            _v3 = @"{""name"":""John"", ""surname"":""Doe"",""burnDate"":""2011-10-05 00:00:00""}";
+            Debug.Log(JsonConvert.SerializeObject(new PersonV1 {Age = 33, Name = "John Doe"}, _setting));
         }
     }
 }
