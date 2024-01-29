@@ -31,11 +31,17 @@ namespace Light_Migrations.Tests.EditorMode
 
     public sealed class Migrator : JsonConverter<IMigratable>
     {
+        public bool IsReadCalled;
+        public bool IsWriteCalled;
+
         public override bool CanRead => true;
 
         public override bool CanWrite => false;
 
-        public override void WriteJson(JsonWriter writer, IMigratable value, JsonSerializer serializer) { }
+        public override void WriteJson(JsonWriter writer, IMigratable value, JsonSerializer serializer)
+        {
+            IsWriteCalled = true;
+        }
 
         public override IMigratable ReadJson(JsonReader reader, Type objectType, IMigratable existingValue,
             bool hasExistingValue, JsonSerializer serializer)
@@ -55,6 +61,8 @@ namespace Light_Migrations.Tests.EditorMode
 
             instance.Migrate(ref jObject, versionValue, instance.Version);
             serializer.Populate(jObject.CreateReader(), instance);
+
+            IsReadCalled = true;
             return instance;
         }
     }
@@ -72,21 +80,19 @@ namespace Light_Migrations.Tests.EditorMode
             // given => json with field Version
             var json = @"{""name"":""John Doe"",""age"":33,""Version"":1}";
 
-            // when => deserialize json we run migrator
+            // when => deserialize json
             var migrator = new Migrator();
             var person = JsonConvert.DeserializeObject<PersonV1>(json, migrator);
 
-            // then => we call migrator method
+            // then => we run migrator and call Migrate() on model
             Assert.NotNull(person);
             Assert.IsTrue(person.IsMigrationCalled);
+            Assert.IsTrue(migrator.IsReadCalled);
+            Assert.IsFalse(migrator.IsWriteCalled);
         }
 
         [TearDown] public void TearDown() { }
 
-        [SetUp]
-        public void SetUp()
-        {
-            Debug.Log(JsonConvert.SerializeObject(new PersonV1 { Age = 33, Name = "John Doe" }, _setting));
-        }
+        [SetUp] public void SetUp() { }
     }
 }
