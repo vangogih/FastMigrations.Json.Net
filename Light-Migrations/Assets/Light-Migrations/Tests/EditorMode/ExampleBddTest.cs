@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -12,57 +11,52 @@ namespace Light_Migrations.Tests.EditorMode
         [JsonProperty("Version", Required = Required.Always)]
         int Version { get; }
 
-        JObject Migrate(JObject jsonObj, int from, int to);
+        void Migrate(ref JObject jsonObj, int from, int to);
     }
 
-    public class PersonV1 : IMigratable
+    public sealed class PersonV1 : IMigratable
     {
-        public int Version { get; private set; } = 1;
-        
-        [NonSerialized]
-        public bool IsMigrationCalled;
+        public int Version => 1;
+
+        [NonSerialized] public bool IsMigrationCalled;
 
         [JsonProperty("name")] public string Name;
         [JsonProperty("age")] public int Age;
-        public JObject Migrate(JObject jsonObj, int from, int to)
+
+        public void Migrate(ref JObject jsonObj, int from, int to)
         {
             IsMigrationCalled = true;
-            return null;
         }
     }
 
-    public sealed class Migrator : JsonConverter
+    public sealed class Migrator : JsonConverter<IMigratable>
     {
         public override bool CanRead => true;
 
         public override bool CanWrite => false;
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-        }
+        public override void WriteJson(JsonWriter writer, IMigratable value, JsonSerializer serializer) { }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
+        public override IMigratable ReadJson(JsonReader reader, Type objectType, IMigratable existingValue,
+            bool hasExistingValue, JsonSerializer serializer)
         {
             var jObject = JObject.Load(reader);
             var versionToken = jObject["Version"];
             int versionValue;
-            var instance = (IMigratable) Activator.CreateInstance(objectType);
-            
+            var instance = (IMigratable)Activator.CreateInstance(objectType);
+
             if (versionToken == null)
             {
-                jObject.Add("Version" , instance.Version);
+                jObject.Add("Version", instance.Version);
                 versionValue = instance.Version;
             }
             else
                 versionValue = versionToken.ToObject<int>();
 
-            jObject = instance.Migrate(jObject, versionValue, instance.Version);
-
-            return jObject.ToObject(objectType);
+            instance.Migrate(ref jObject, versionValue, instance.Version);
+            serializer.Populate(jObject.CreateReader(), instance);
+            return instance;
         }
-
-        public override bool CanConvert(Type objectType) => objectType.IsInstanceOfType(typeof(IMigratable));
     }
 
     public sealed class ExampleBddTest
@@ -87,15 +81,12 @@ namespace Light_Migrations.Tests.EditorMode
             Assert.IsTrue(person.IsMigrationCalled);
         }
 
-        [TearDown]
-        public void TearDown()
-        {
-        }
+        [TearDown] public void TearDown() { }
 
         [SetUp]
         public void SetUp()
         {
-            Debug.Log(JsonConvert.SerializeObject(new PersonV1 {Age = 33, Name = "John Doe"}, _setting));
+            Debug.Log(JsonConvert.SerializeObject(new PersonV1 { Age = 33, Name = "John Doe" }, _setting));
         }
     }
 }
