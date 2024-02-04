@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace Light_Migrations.Tests.EditorMode
 {
@@ -29,19 +28,34 @@ namespace Light_Migrations.Tests.EditorMode
         }
     }
 
-    public sealed class Migrator : JsonConverter<IMigratable>
+    public sealed class MigratorMock : Migrator
     {
         public bool IsReadCalled;
         public bool IsWriteCalled;
 
-        public override bool CanRead => true;
+        public override IMigratable ReadJson(JsonReader reader, Type objectType, IMigratable existingValue,
+            bool hasExistingValue, JsonSerializer serializer)
+        {
+            IsReadCalled = true;
 
-        public override bool CanWrite => false;
+            return base.ReadJson(reader, objectType, existingValue, hasExistingValue,
+                serializer);
+        }
 
         public override void WriteJson(JsonWriter writer, IMigratable value, JsonSerializer serializer)
         {
             IsWriteCalled = true;
+            base.WriteJson(writer, value, serializer);
         }
+    }
+
+    public class Migrator : JsonConverter<IMigratable>
+    {
+        public override bool CanRead => true;
+
+        public override bool CanWrite => false;
+
+        public override void WriteJson(JsonWriter writer, IMigratable value, JsonSerializer serializer) { }
 
         public override IMigratable ReadJson(JsonReader reader, Type objectType, IMigratable existingValue,
             bool hasExistingValue, JsonSerializer serializer)
@@ -62,7 +76,6 @@ namespace Light_Migrations.Tests.EditorMode
             instance.Migrate(ref jObject, versionValue, instance.Version);
             serializer.Populate(jObject.CreateReader(), instance);
 
-            IsReadCalled = true;
             return instance;
         }
     }
@@ -70,18 +83,15 @@ namespace Light_Migrations.Tests.EditorMode
     public sealed class ExampleBddTest
     {
         private JsonSerializerSettings _setting;
-        private string _v1;
-        private string _v2;
-        private string _v3;
 
         [Test]
-        public void Migration_Test()
+        public void ValidJsonV1_Deserialize_MigratorCalled()
         {
             // given => json with field Version
             var json = @"{""name"":""John Doe"",""age"":33,""Version"":1}";
 
             // when => deserialize json
-            var migrator = new Migrator();
+            var migrator = new MigratorMock();
             var person = JsonConvert.DeserializeObject<PersonV1>(json, migrator);
 
             // then => we run migrator and call Migrate() on model
@@ -90,6 +100,11 @@ namespace Light_Migrations.Tests.EditorMode
             Assert.IsTrue(migrator.IsReadCalled);
             Assert.IsFalse(migrator.IsWriteCalled);
         }
+
+        // TODO: Case when we have JsonConstructor
+        // TODO: Case when we have more then 1 converter
+        // TODO: Case when we have more then 1 IMigratable implementations inside one json
+        // TODO: Case when we have to migrate from version 1 to 3
 
         [TearDown] public void TearDown() { }
 
