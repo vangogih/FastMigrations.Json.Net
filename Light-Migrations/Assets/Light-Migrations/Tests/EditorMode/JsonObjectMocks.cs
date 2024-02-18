@@ -1,96 +1,76 @@
 ﻿using System;
+using System.Collections.Generic;
 using Light_Migrations.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Light_Migrations.Tests.EditorMode
 {
-    public sealed class PersonV1 : IMigratable
+    public static class MethodCallHandler
     {
-        public int Version => 1;
-
-        [NonSerialized] public int MigrationCalledCount;
-
-        [JsonProperty("name")] public string Name;
-        [JsonProperty("age")] public int Age;
-
-        public void Migrate(ref JObject jsonObj, int from, int to)
+        public static IReadOnlyDictionary<Type, MethodCallInfo> VersionCalledCount => _versionCalledCount;
+        private static readonly Dictionary<Type, MethodCallInfo> _versionCalledCount = new();
+        public static void RegisterMethodCall(Type type, string methodName)
         {
-            MigrationCalledCount++;
+            var methodVersion = int.Parse(methodName.Split('_')[1]);
+            if (_versionCalledCount.ContainsKey(type))
+                _versionCalledCount[type].MethodCallCount++;
+            else
+                _versionCalledCount.Add(type, new MethodCallInfo(methodVersion, 1));
+        }
+        
+        public static void Clear()
+        {
+            _versionCalledCount.Clear();
+        }
+
+        public class MethodCallInfo
+        {
+            public int methodVersion;
+            public int MethodCallCount;
+
+            public MethodCallInfo(int methodVersion, int methodCallCount)
+            {
+                this.methodVersion = methodVersion;
+                MethodCallCount = methodCallCount;
+            }
+            
+            public void Deconstruct(out int methodVersion, out int methodCallCount)
+            {
+                methodVersion = this.methodVersion;
+                methodCallCount = MethodCallCount;
+            }
         }
     }
     
-    public sealed class PersonV3 : IMigratable
+    [Migratable(1)]
+    public sealed class PersonV1
     {
-        public int Version => 3;
+        [JsonProperty("name")] public string Name;
+        [JsonProperty("age")] public int Age;
 
+        private static JObject Migrate_1(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(PersonV1), nameof(Migrate_1));
+            return jsonObj;
+        }
+    }
+
+    [Migratable(2)]
+    public sealed class PersonV2
+    {
         [JsonProperty("fullName")] public string FullName;
         [JsonProperty("name")] public string Name;
         [JsonProperty("surname")] public string Surname;
         [JsonProperty("birthYear")] public int BirthYear;
 
-        public void Migrate(ref JObject jsonObj, int from, int to)
+        private static JObject Migrate_1(JObject jsonObj)
         {
-            if (from == 1 && to == 3)
-                From1To3(jsonObj);
-
-            if (from == 3 && to == 10)
-            {
-                //From3To4(jsonObj);
-                //From4To5(jsonObj);
-                //From6To7(jsonObj);
-                //From7To8(jsonObj);
-                //From8To9(jsonObj);
-                //From9To10(jsonObj);
-            }
-
-            if (from == 4 && to == 10)
-            {
-                //From4To5(jsonObj);
-                //From6To7(jsonObj);
-                //From7To8(jsonObj);
-                //From8To9(jsonObj);
-                //From9To10(jsonObj);
-            }
-            
-            if (from == 5 && to == 10)
-            {
-                //From6To7(jsonObj);
-                //From7To8(jsonObj);
-                //From8To9(jsonObj);
-                //From9To10(jsonObj);
-            }
-            
-            if (from == 6 && to == 10)
-            {
-                //From7To8(jsonObj);
-                //From8To9(jsonObj);
-                //From9To10(jsonObj);
-            }
-            
-            if (from == 7 && to == 10)
-            {
-                //From8To9(jsonObj);
-                //From9To10(jsonObj);
-            }
-            
-            if (from == 8 && to == 10)
-            {
-                //From9To10(jsonObj);
-            }
-            
-            if (from == 9 && to == 10)
-            {
-                //From9To10(jsonObj);
-            }
-            
-            if (from == 10 && to == 10)
-            {
-                //From9To10(jsonObj);
-            }
+            MethodCallHandler.RegisterMethodCall(typeof(PersonV2), nameof(Migrate_1));
+            return jsonObj;
         }
 
-        private static void From1To3(JObject jsonObj)
+        private static JObject Migrate_2(JObject jsonObj)
         {
             JToken nameToken = jsonObj["name"];
             jsonObj.Add("fullName", nameToken);
@@ -103,14 +83,16 @@ namespace Light_Migrations.Tests.EditorMode
             jsonObj.Remove("name");
             jsonObj.Add("name", oldNameSplit[0]);
             jsonObj.Add("surname", oldNameSplit[1]);
+            
+            MethodCallHandler.RegisterMethodCall(typeof(PersonV2), nameof(Migrate_2));
+            
+            return jsonObj;
         }
     }
 
-    public sealed class PersonJsonCtor : IMigratable
+    [Migratable(1)]
+    public sealed class PersonJsonCtor
     {
-        public int Version => 1;
-
-        [NonSerialized] public bool IsMigrationCalled;
         [NonSerialized] public bool IsJsonCtorCalled;
 
         [JsonProperty("name")] public string Name;
@@ -126,9 +108,10 @@ namespace Light_Migrations.Tests.EditorMode
             IsJsonCtorCalled = true;
         }
 
-        public void Migrate(ref JObject jsonObj, int from, int to)
+        private static JObject Migrate_1(JObject jsonObj)
         {
-            IsMigrationCalled = true;
+            MethodCallHandler.RegisterMethodCall(typeof(PersonJsonCtor), nameof(Migrate_1));
+            return jsonObj;
         }
     }
 
@@ -137,18 +120,17 @@ namespace Light_Migrations.Tests.EditorMode
         [JsonProperty("person1")] public PersonV1 Person1;
         [JsonProperty("person2")] public PersonV1 Person2;
     }
-    
-    public class TwoPersonsMigratableMock : IMigratable
-    {
-        public int Version => 1;
-        [NonSerialized] public int MigrationCalledCount;
 
+    [Migratable(1)]
+    public class TwoPersonsMigratableMock
+    {
         [JsonProperty("person1")] public PersonV1 Person1;
         [JsonProperty("person2")] public PersonV1 Person2;
 
-        public void Migrate(ref JObject jsonObj, int from, int to)
+        private static JObject Migrate_1(JObject jsonObj)
         {
-            MigrationCalledCount++;
+            MethodCallHandler.RegisterMethodCall(typeof(TwoPersonsMigratableMock), nameof(Migrate_1));
+            return jsonObj;
         }
     }
 

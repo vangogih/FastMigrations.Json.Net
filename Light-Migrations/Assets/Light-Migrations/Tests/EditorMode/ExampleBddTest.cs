@@ -29,20 +29,17 @@ namespace Light_Migrations.Tests.EditorMode
         public int ReadJsonCalledCount;
         public int WriteJsonCalledCount;
 
-        public override IMigratable ReadJson(JsonReader reader, Type objectType, IMigratable existingValue,
-            bool hasExistingValue, JsonSerializer serializer)
-        {
-            ReadJsonCalledCount++;
-
-            return base.ReadJson(reader, objectType, existingValue, hasExistingValue,
-                serializer);
-        }
-
-        public override void WriteJson(JsonWriter writer, IMigratable value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             WriteJsonCalledCount++;
-
             base.WriteJson(writer, value, serializer);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
+        {
+            ReadJsonCalledCount++;
+            return base.ReadJson(reader, objectType, existingValue, serializer);
         }
     }
 
@@ -62,13 +59,12 @@ namespace Light_Migrations.Tests.EditorMode
 
             // then => we run migrator and call Migrate() on model
             Assert.NotNull(person);
-            Assert.AreEqual(1, person.MigrationCalledCount);
+            Assert.AreEqual(1, MethodCallHandler.VersionCalledCount[typeof(PersonV1)].MethodCallCount);
             Assert.AreEqual(1, migrator.ReadJsonCalledCount);
             Assert.AreEqual(0, migrator.WriteJsonCalledCount);
         }
 
         [Test]
-        [Ignore("JsonConstructor is not supported yet")]
         public void ValidJsonV1_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled()
         {
             // given => json with field Version
@@ -80,7 +76,7 @@ namespace Light_Migrations.Tests.EditorMode
 
             // then => we run migrator and call Migrate() and JsonCtor on model
             Assert.NotNull(person);
-            Assert.IsTrue(person.IsMigrationCalled);
+            Assert.AreEqual(1, MethodCallHandler.VersionCalledCount[typeof(PersonJsonCtor)].MethodCallCount);
             Assert.IsTrue(person.IsJsonCtorCalled);
         }
 
@@ -117,8 +113,7 @@ namespace Light_Migrations.Tests.EditorMode
             // then => there is not exception
             Assert.NotNull(persons);
             // and => we call Migrate() on both objects
-            Assert.AreEqual(1, persons.Person1.MigrationCalledCount);
-            Assert.AreEqual(1, persons.Person2.MigrationCalledCount);
+            Assert.AreEqual(2, MethodCallHandler.VersionCalledCount[typeof(PersonV1)].MethodCallCount);
             Assert.AreEqual(2, migrator.ReadJsonCalledCount);
         }
 
@@ -138,10 +133,9 @@ namespace Light_Migrations.Tests.EditorMode
             // then => there is not exception
             Assert.NotNull(persons);
             // and => we call Migrate() on both objects
-            Assert.AreEqual(1, persons.Person1.MigrationCalledCount);
-            Assert.AreEqual(1, persons.Person2.MigrationCalledCount);
+            Assert.AreEqual(2, MethodCallHandler.VersionCalledCount[typeof(PersonV1)].MethodCallCount);
             // and => we call Migrate() on parent object
-            Assert.AreEqual(1, persons.MigrationCalledCount);
+            Assert.AreEqual(1, MethodCallHandler.VersionCalledCount[typeof(TwoPersonsMigratableMock)].MethodCallCount);
             // and => we call ReadJson() on migrator 3 times
             Assert.AreEqual(3, migrator.ReadJsonCalledCount);
         }
@@ -166,8 +160,7 @@ namespace Light_Migrations.Tests.EditorMode
             // then => there is no exception
             Assert.NotNull(persons);
             // and => we call Migrate() on each object
-            Assert.AreEqual(1, persons.Persons[0].MigrationCalledCount);
-            Assert.AreEqual(1, persons.Persons[1].MigrationCalledCount);
+            Assert.AreEqual(2, MethodCallHandler.VersionCalledCount[typeof(PersonV1)].MethodCallCount);
         }
 
         [Test]
@@ -190,8 +183,7 @@ namespace Light_Migrations.Tests.EditorMode
             // then => there is no exception
             Assert.NotNull(persons);
             // and => we call Migrate() on each object
-            Assert.AreEqual(1, persons.Persons[0].MigrationCalledCount);
-            Assert.AreEqual(1, persons.Persons[1].MigrationCalledCount);
+            Assert.AreEqual(2, MethodCallHandler.VersionCalledCount[typeof(PersonV1)].MethodCallCount);
         }
 
         [Test]
@@ -214,8 +206,7 @@ namespace Light_Migrations.Tests.EditorMode
             // then => there is no exception
             Assert.NotNull(persons);
             // and => we call Migrate() on each object
-            Assert.AreEqual(1, persons.Persons["person1"].MigrationCalledCount);
-            Assert.AreEqual(1, persons.Persons["person2"].MigrationCalledCount);
+            Assert.AreEqual(2, MethodCallHandler.VersionCalledCount[typeof(PersonV1)].MethodCallCount);
         }
 
         [Test]
@@ -225,14 +216,14 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}";
             // when => deserialize json with migrator and type of version 3
             var migrator = new MigratorMock();
-            var person = JsonConvert.DeserializeObject<PersonV3>(json, migrator);
+            var person = JsonConvert.DeserializeObject<PersonV2>(json, migrator);
             // then => there is no exception
             Assert.NotNull(person);
             // and => data inside object is correct
-            Assert.AreEqual(person.FullName, "Alex Kozorezov");
-            Assert.AreEqual(person.Name, "Alex");
-            Assert.AreEqual(person.Surname, "Kozorezov");
-            Assert.AreEqual(person.BirthYear, 1997);
+            Assert.AreEqual("Alex Kozorezov", person.FullName);
+            Assert.AreEqual("Alex", person.Name);
+            Assert.AreEqual("Kozorezov", person.Surname);
+            Assert.AreEqual(1997, person.BirthYear);
         }
 
         [Test]
@@ -241,7 +232,7 @@ namespace Light_Migrations.Tests.EditorMode
             // given => json with field Version with value 1
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}";
             // when => try to deserialize json without migrator and type of version 3
-            var person = JsonConvert.DeserializeObject<PersonV3>(json);
+            var person = JsonConvert.DeserializeObject<PersonV2>(json);
             // then => there is exception
             Assert.IsNotNull(person);
             Assert.AreEqual("Alex Kozorezov", person.Name);
@@ -255,10 +246,10 @@ namespace Light_Migrations.Tests.EditorMode
         // DONE: Case when we have more then 1 converter (Add this as limitation)
         // DONE: Case when we have more then 1 IMigratable implementations inside one json
         // DONE: Case when we have to migrate from version 1 to 3
-        // TODO: Rewrite Migrator implementation to allow to call migration sequentially to avoid writing boilerplate code on users side  
+        // DONE: Rewrite Migrator implementation to allow to call migration sequentially to avoid writing boilerplate code on users side 
+        // TODO: Add test case for populate and existing value (existingValue != null && serializer.ObjectCreationHandling != ObjectCreationHandling.Replace)
         // TODO: Ask Ilya Naumov to add recommendation to implement IMigtratable interface explicitly 
-
-        [TearDown] public void TearDown() { }
+        [TearDown] public void TearDown() {MethodCallHandler.Clear(); }
 
         [SetUp] public void SetUp() { }
     }
