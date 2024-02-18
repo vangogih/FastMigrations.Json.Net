@@ -121,7 +121,7 @@ namespace Light_Migrations.Tests.EditorMode
             Assert.AreEqual(1, persons.Person2.MigrationCalledCount);
             Assert.AreEqual(2, migrator.ReadJsonCalledCount);
         }
-        
+
         [Test]
         public void MigratableObjectsInsideMigratableObject_Deserialize_MigratorCalled()
         {
@@ -134,7 +134,7 @@ namespace Light_Migrations.Tests.EditorMode
             // when => deserialize json
             var migrator = new MigratorMock();
             var persons = JsonConvert.DeserializeObject<TwoPersonsMigratableMock>(json, migrator);
-            
+
             // then => there is not exception
             Assert.NotNull(persons);
             // and => we call Migrate() on both objects
@@ -150,7 +150,14 @@ namespace Light_Migrations.Tests.EditorMode
         public void PersonInArray_Deserialize_MigratorCalled()
         {
             // given => jsom with array of migratable objects
-            var json = @"{""persons"":[{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}, {""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}]}";
+            var json = @"
+{
+    ""persons"":
+        [
+            {""name"":""Alex Kozorezov"",""age"":27,""Version"":1},
+            {""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}
+        ]
+}";
 
             // when => deserialize json with migrator
             var migrator = new MigratorMock();
@@ -167,29 +174,43 @@ namespace Light_Migrations.Tests.EditorMode
         public void PersonInList_Deserialize_MigratorCalled()
         {
             // given => jsom with list of migratable objects
-            var json = @"{""persons"":[{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}, {""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}]}";
+            var json = @"
+{
+    ""persons"":
+        [
+            {""name"":""Alex Kozorezov"",""age"":27,""Version"":1},
+            {""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}
+        ]
+}";
 
             // when => deserialize json with migrator
             var migrator = new MigratorMock();
             var persons = JsonConvert.DeserializeObject<PersonsDataStructureMock<List<PersonV1>>>(json, migrator);
-            
+
             // then => there is no exception
             Assert.NotNull(persons);
             // and => we call Migrate() on each object
             Assert.AreEqual(1, persons.Persons[0].MigrationCalledCount);
             Assert.AreEqual(1, persons.Persons[1].MigrationCalledCount);
         }
-        
+
         [Test]
         public void PersonInDictionary_Deserialize_MigratorCalled()
         {
             // given => jsom with dictionary of migratable objects
-            var json = @"{""persons"":{""person1"":{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}, ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}}}";
+            var json = @"
+{
+    ""persons"":
+    {
+        ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}, 
+        ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}
+    }
+}";
 
             // when => deserialize json with migrator
             var migrator = new MigratorMock();
             var persons = JsonConvert.DeserializeObject<PersonsDataStructureMock<Dictionary<string, PersonV1>>>(json, migrator);
-            
+
             // then => there is no exception
             Assert.NotNull(persons);
             // and => we call Migrate() on each object
@@ -213,7 +234,7 @@ namespace Light_Migrations.Tests.EditorMode
             Assert.AreEqual(person.Surname, "Kozorezov");
             Assert.AreEqual(person.BirthYear, 1997);
         }
-        
+
         [Test]
         public void JsonWithVersion1_DeserializeAsVersion3WithoutMigrator_Exception()
         {
