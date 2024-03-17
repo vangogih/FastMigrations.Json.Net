@@ -34,12 +34,6 @@ namespace Light_Migrations.Tests.EditorMode
                 this.methodVersion = methodVersion;
                 MethodCallCount = methodCallCount;
             }
-            
-            public void Deconstruct(out int methodVersion, out int methodCallCount)
-            {
-                methodVersion = this.methodVersion;
-                methodCallCount = MethodCallCount;
-            }
         }
     }
     

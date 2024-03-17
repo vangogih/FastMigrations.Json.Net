@@ -1,52 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Light_Migrations.Runtime;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Light_Migrations.Tests.EditorMode
 {
-    public sealed class ReadConverterMock : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) { }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-        {
-            var obj = JToken.Load(reader);
-            return existingValue;
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return true;
-        }
-    }
-
-    public sealed class MigratorMock : Migrator
-    {
-        public int ReadJsonCalledCount;
-        public int WriteJsonCalledCount;
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            WriteJsonCalledCount++;
-            base.WriteJson(writer, value, serializer);
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-        {
-            ReadJsonCalledCount++;
-            return base.ReadJson(reader, objectType, existingValue, serializer);
-        }
-    }
-
     public sealed class ExampleBddTest
     {
-        private JsonSerializerSettings _setting;
-
         [Test]
         public void ValidJsonV1_Deserialize_MigratorCalled()
         {
@@ -88,11 +47,11 @@ namespace Light_Migrations.Tests.EditorMode
 
             // when => we have more then one converter
             var migrator1 = new MigratorMock();
-            var migrator2 = new ReadConverterMock();
+            var randomConverter = new ReadConverterMock();
 
             // then => there is no exception AND person is not an empty
             PersonV1 person = null;
-            Assert.DoesNotThrow(() => { person = JsonConvert.DeserializeObject<PersonV1>(json, migrator1, migrator2); });
+            Assert.DoesNotThrow(() => { person = JsonConvert.DeserializeObject<PersonV1>(json, migrator1, randomConverter); });
             Assert.NotNull(person);
         }
 
@@ -102,8 +61,8 @@ namespace Light_Migrations.Tests.EditorMode
             // given => json with 2 migratable objects inside
             var json = @"
 {
-""person1"":{""name"":""Alex Kozorezov"",""age"":27,""Version"":1},
-""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}
+    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""Version"":1},
+    ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}
 }";
 
             // when => deserialize json
@@ -123,8 +82,8 @@ namespace Light_Migrations.Tests.EditorMode
             // given => json with migratable objects inside migratable object
             var json = @"
 {
-""person1"":{""name"":""Alex Kozorezov"",""age"":27,""Version"":1},
-""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}
+    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""Version"":1},
+    ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""Version"":1}
 }";
             // when => deserialize json
             var migrator = new MigratorMock();
@@ -214,9 +173,11 @@ namespace Light_Migrations.Tests.EditorMode
         {
             // given => json with field Version with value 1
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}";
+            
             // when => deserialize json with migrator and type of version 3
             var migrator = new MigratorMock();
             var person = JsonConvert.DeserializeObject<PersonV2>(json, migrator);
+            
             // then => there is no exception
             Assert.NotNull(person);
             // and => data inside object is correct
@@ -231,8 +192,10 @@ namespace Light_Migrations.Tests.EditorMode
         {
             // given => json with field Version with value 1
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""Version"":1}";
+            
             // when => try to deserialize json without migrator and type of version 3
             var person = JsonConvert.DeserializeObject<PersonV2>(json);
+            
             // then => there is exception
             Assert.IsNotNull(person);
             Assert.AreEqual("Alex Kozorezov", person.Name);
@@ -247,7 +210,16 @@ namespace Light_Migrations.Tests.EditorMode
         // DONE: Case when we have more then 1 IMigratable implementations inside one json
         // DONE: Case when we have to migrate from version 1 to 3
         // DONE: Rewrite Migrator implementation to allow to call migration sequentially to avoid writing boilerplate code on users side 
-        // TODO: Add test case for populate and existing value (existingValue != null && serializer.ObjectCreationHandling != ObjectCreationHandling.Replace)
+        // DONE: Add test case for populate and existing value (existingValue != null && serializer.ObjectCreationHandling != ObjectCreationHandling.Replace)
+        // TODO: Case when we have MigrationException
+        // TODO: Case when we have MissingMigratorMethodHandling
+        // TODO: Case for empty json
+        // TODO: Case for WriteJson
+        // TODO: Improve test with many migrators
+        // TODO: Benchmark for TypeCache test
+        // TODO: Case for struct
+        // TODO: Case for generics
+
         // TODO: Ask Ilya Naumov to add recommendation to implement IMigtratable interface explicitly 
         [TearDown] public void TearDown() {MethodCallHandler.Clear(); }
 

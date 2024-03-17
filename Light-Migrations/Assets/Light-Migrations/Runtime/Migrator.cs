@@ -23,13 +23,13 @@ namespace Light_Migrations.Runtime
                 var jObject = JObject.Load(reader);
                 int fromVersion;
 
-                if (!jObject.ContainsKey(MigratorConstants.VersionFieldName))
+                if (!jObject.ContainsKey(MigratorConstants.VersionJsonFieldName))
                     fromVersion = 1;
                 else
-                    fromVersion = jObject[MigratorConstants.VersionFieldName]!.ToObject<int>();
+                    fromVersion = jObject[MigratorConstants.VersionJsonFieldName]!.ToObject<int>();
 
                 var migratableAttribute = (MigratableAttribute)objectType.GetCustomAttribute(typeof(MigratableAttribute), true);
-                var toVersion = migratableAttribute.Version;
+                int toVersion = migratableAttribute.Version;
 
                 for (int currVersion = fromVersion; currVersion <= toVersion; currVersion++)
                 {
@@ -39,7 +39,7 @@ namespace Light_Migrations.Runtime
                     if (migrationMethod == null)
                         throw new MigrationException($"Implementation of migration method not found, should be private static JObject {methodName}(JObject jsonObj)");
 
-                    jObject = (JObject)migrationMethod.Invoke(null, new object[] { jObject });
+                    jObject = (JObject) migrationMethod.Invoke(null, new object[] { jObject });
                 }
 
                 using JsonReader jObjReader = jObject.CreateReader();
@@ -66,7 +66,7 @@ namespace Light_Migrations.Runtime
         }
     }
     
-    public class MigrationException : Exception
+    public sealed class MigrationException : Exception
     {
         public MigrationException(string message) : base(message) { }
     }
