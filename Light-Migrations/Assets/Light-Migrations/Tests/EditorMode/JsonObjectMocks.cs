@@ -49,6 +49,19 @@ namespace Light_Migrations.Tests.EditorMode
             return jsonObj;
         }
     }
+    
+    [Migratable(1)]
+    public struct PersonStructV1
+    {
+        [JsonProperty("name")] public string Name;
+        [JsonProperty("age")] public int Age;
+
+        private static JObject Migrate_1(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(PersonStructV1), nameof(Migrate_1));
+            return jsonObj;
+        }
+    }
 
     [Migratable(2)]
     public sealed class PersonV2
@@ -108,11 +121,24 @@ namespace Light_Migrations.Tests.EditorMode
             return jsonObj;
         }
     }
+    
+    [Migratable(1)]
+    public sealed class PersonWithoutMigrationMethod
+    {
+        [JsonProperty("name")] public string Name;
+        [JsonProperty("age")] public int Age;
+    }
 
     public class TwoPersonsNotMigratableMock
     {
         [JsonProperty("person1")] public PersonV1 Person1;
         [JsonProperty("person2")] public PersonV1 Person2;
+    }
+
+    public class TwoPersonsTwoDifferentMigratableMock
+    {
+        [JsonProperty("person1")] public PersonV1 Person1;
+        public Version Version;
     }
 
     [Migratable(1)]

@@ -23,10 +23,14 @@ namespace Light_Migrations.Tests.EditorMode
         }
     }
 
-    public sealed class MigratorMock : Migrator
+    public sealed class LightMigrationsConverterMock : LigthMigrationsConverter
     {
         public int ReadJsonCalledCount;
+
         public int WriteJsonCalledCount;
+
+        public LightMigrationsConverterMock(MigratorMissingMethodHandling methodHandling)
+            : base(methodHandling) { }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
