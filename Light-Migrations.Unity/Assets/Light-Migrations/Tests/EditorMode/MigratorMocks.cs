@@ -23,7 +23,7 @@ namespace Light_Migrations.Tests.EditorMode
         }
     }
 
-    public sealed class LightMigrationsConverterMock : LigthMigrationsConverter
+    public sealed class LightMigrationsConverterMock : LightMigrationsConverter
     {
         public int ReadJsonCalledCount;
 

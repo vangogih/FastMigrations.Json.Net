@@ -12,7 +12,7 @@ namespace Light_Migrations.Runtime
         Ignore
     }
 
-    public class LigthMigrationsConverter : JsonConverter
+    public class LightMigrationsConverter : JsonConverter
     {
         public override bool CanRead => true;
         public override bool CanWrite => true;
@@ -20,7 +20,7 @@ namespace Light_Migrations.Runtime
         private readonly MigratorMissingMethodHandling _methodHandling;
         private readonly HashSet<Type> _migrationInProgress = new();
 
-        public LigthMigrationsConverter(MigratorMissingMethodHandling methodHandling)
+        public LightMigrationsConverter(MigratorMissingMethodHandling methodHandling)
         {
             _methodHandling = methodHandling;
         }

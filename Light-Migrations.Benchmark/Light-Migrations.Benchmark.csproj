@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Light_Migrations.Benchmark</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+      <PackageReference Include="Weingartner.Json.Migration" Version="2.1.14" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Light-Migrations.StandaloneTests\Light-Migrations.StandaloneTests.csproj" />
+      <ProjectReference Include="..\Light-Migrations.Standalone\Light-Migrations.Standalone.csproj" />
+    </ItemGroup>
+
+</Project>

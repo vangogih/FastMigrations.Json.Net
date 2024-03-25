@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Standalone
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Standalone", "Light-Migrations.Standalone\Light-Migrations.Standalone.csproj", "{356698A4-973C-4CDA-B4C1-0497CC11A373}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Benchmark", "Light-Migrations.Benchmark\Light-Migrations.Benchmark.csproj", "{5F189D3D-1B47-4FE0-9EB5-DDF6CCD3DAC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{356698A4-973C-4CDA-B4C1-0497CC11A373}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{356698A4-973C-4CDA-B4C1-0497CC11A373}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{356698A4-973C-4CDA-B4C1-0497CC11A373}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F189D3D-1B47-4FE0-9EB5-DDF6CCD3DAC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F189D3D-1B47-4FE0-9EB5-DDF6CCD3DAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F189D3D-1B47-4FE0-9EB5-DDF6CCD3DAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F189D3D-1B47-4FE0-9EB5-DDF6CCD3DAC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
