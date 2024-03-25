@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.StandaloneTests", "Light-Migrations.StandaloneTests\Light-Migrations.StandaloneTests.csproj", "{81EAEDE2-B4E6-4FC8-A688-EE468370E904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Standalone", "Light-Migrations.Standalone\Light-Migrations.Standalone.csproj", "{356698A4-973C-4CDA-B4C1-0497CC11A373}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81EAEDE2-B4E6-4FC8-A688-EE468370E904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81EAEDE2-B4E6-4FC8-A688-EE468370E904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81EAEDE2-B4E6-4FC8-A688-EE468370E904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81EAEDE2-B4E6-4FC8-A688-EE468370E904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356698A4-973C-4CDA-B4C1-0497CC11A373}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356698A4-973C-4CDA-B4C1-0497CC11A373}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356698A4-973C-4CDA-B4C1-0497CC11A373}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356698A4-973C-4CDA-B4C1-0497CC11A373}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

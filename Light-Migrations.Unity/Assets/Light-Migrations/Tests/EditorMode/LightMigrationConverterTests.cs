@@ -28,14 +28,14 @@ namespace Light_Migrations.Tests.EditorMode
         {
             // given => json with field Version
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
-            
+
             // when => deserialize json as struct
             var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
-            
+
             // then => there is no exception
             PersonStructV1 person = default;
-            Assert.DoesNotThrow(()=> person = JsonConvert.DeserializeObject<PersonStructV1>(json, migrator));
-            
+            Assert.DoesNotThrow(() => person = JsonConvert.DeserializeObject<PersonStructV1>(json, migrator));
+
             // and => person is not an empty
             Assert.AreEqual("Alex Kozorezov", person.Name);
             Assert.AreEqual(27, person.Age);
@@ -98,7 +98,7 @@ namespace Light_Migrations.Tests.EditorMode
 ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1},
 ""Version"":""1.2.3""
 }";
-            
+
             // when => we have more then one migrator
             var migrator1 = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var migrator2 = new VersionConverter();
@@ -106,13 +106,13 @@ namespace Light_Migrations.Tests.EditorMode
             // then => there is no exception
             TwoPersonsTwoDifferentMigratableMock persons = null;
             Assert.DoesNotThrow(() => persons = JsonConvert.DeserializeObject<TwoPersonsTwoDifferentMigratableMock>(json, migrator1, migrator2));
-            
+
             Assert.NotNull(persons);
-            
+
             Assert.NotNull(persons.Person1);
             Assert.AreEqual("Alex Kozorezov", persons.Person1.Name);
             Assert.AreEqual(27, persons.Person1.Age);
-            
+
             Assert.NotNull(persons.Version);
             Assert.AreEqual(persons.Version.Major, 1);
             Assert.AreEqual(persons.Version.Minor, 2);
@@ -282,11 +282,11 @@ namespace Light_Migrations.Tests.EditorMode
         {
             // given => json with field Version with value 1
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
-            
+
             // when => deserialize json with migrator and type of version 3
             var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var person = JsonConvert.DeserializeObject<PersonV2>(json, migrator);
-            
+
             // then => there is no exception
             Assert.NotNull(person);
             // and => data inside object is correct
@@ -301,10 +301,10 @@ namespace Light_Migrations.Tests.EditorMode
         {
             // given => json with field Version with value 1
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
-            
+
             // when => try to deserialize json without migrator and type of version 3
             var person = JsonConvert.DeserializeObject<PersonV2>(json);
-            
+
             // then => there is exception
             Assert.IsNotNull(person);
             Assert.AreEqual("Alex Kozorezov", person.Name);
@@ -318,12 +318,12 @@ namespace Light_Migrations.Tests.EditorMode
         {
             // given => json with field Version
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
-            
+
             // when => populate json with migrator
             var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var person = new PersonV1 { Name = "Mikhail Suvorov", Age = 31 };
             JsonConvert.PopulateObject(json, person, new JsonSerializerSettings { Converters = { migrator } });
-            
+
             // then => old value in object is not replaced
             Assert.AreEqual("Alex Kozorezov", person.Name);
             Assert.AreEqual(27, person.Age);
@@ -346,21 +346,11 @@ namespace Light_Migrations.Tests.EditorMode
             Assert.IsTrue(jsonV2.Contains(@"""MigrationVersion"":2"));
         }
 
-        // DONE: Separate files to assemblies
-        // DONE: Case when we have JsonConstructor (it must be problematic)
-        // DONE: Case when we have more then 1 converter (Add this as limitation)
-        // DONE: Case when we have more then 1 IMigratable implementations inside one json
-        // DONE: Case when we have to migrate from version 1 to 3
-        // DONE: Rewrite Migrator implementation to allow to call migration sequentially to avoid writing boilerplate code on users side 
-        // DONE: Add test case for populate and existing value (existingValue != null && serializer.ObjectCreationHandling != ObjectCreationHandling.Replace)
-        // DONE: Case when we have MigrationException
-        // DONE: Case when we have MissingMigratorMethodHandling
-        // DONE: Case for empty json and null
-        // DONE: Case for WriteJson
-        // DONE: Improve test with many migrators
-        // DONE: Case for struct
-        // DONE: Case for Populate and existing value
-        [TearDown] public void TearDown() {MethodCallHandler.Clear(); }
+        [TearDown]
+        public void TearDown()
+        {
+            MethodCallHandler.Clear();
+        }
 
         [SetUp] public void SetUp() { }
     }

@@ -10,15 +10,17 @@ namespace Light_Migrations.Tests.EditorMode
     {
         public static IReadOnlyDictionary<Type, MethodCallInfo> VersionCalledCount => _versionCalledCount;
         private static readonly Dictionary<Type, MethodCallInfo> _versionCalledCount = new();
+
         public static void RegisterMethodCall(Type type, string methodName)
         {
             var methodVersion = int.Parse(methodName.Split('_')[1]);
+
             if (_versionCalledCount.ContainsKey(type))
                 _versionCalledCount[type].MethodCallCount++;
             else
                 _versionCalledCount.Add(type, new MethodCallInfo(methodVersion, 1));
         }
-        
+
         public static void Clear()
         {
             _versionCalledCount.Clear();
@@ -26,17 +28,17 @@ namespace Light_Migrations.Tests.EditorMode
 
         public class MethodCallInfo
         {
-            public int methodVersion;
+            public int MethodVersion;
             public int MethodCallCount;
 
             public MethodCallInfo(int methodVersion, int methodCallCount)
             {
-                this.methodVersion = methodVersion;
+                MethodVersion = methodVersion;
                 MethodCallCount = methodCallCount;
             }
         }
     }
-    
+
     [Migratable(1)]
     public sealed class PersonV1
     {
@@ -49,7 +51,7 @@ namespace Light_Migrations.Tests.EditorMode
             return jsonObj;
         }
     }
-    
+
     [Migratable(1)]
     public struct PersonStructV1
     {
@@ -90,9 +92,9 @@ namespace Light_Migrations.Tests.EditorMode
             jsonObj.Remove("name");
             jsonObj.Add("name", oldNameSplit[0]);
             jsonObj.Add("surname", oldNameSplit[1]);
-            
+
             MethodCallHandler.RegisterMethodCall(typeof(PersonV2), nameof(Migrate_2));
-            
+
             return jsonObj;
         }
     }
@@ -100,7 +102,7 @@ namespace Light_Migrations.Tests.EditorMode
     [Migratable(1)]
     public sealed class PersonJsonCtor
     {
-        [NonSerialized] public bool IsJsonCtorCalled;
+        [NonSerialized] public readonly bool IsJsonCtorCalled;
 
         [JsonProperty("name")] public string Name;
         [JsonProperty("age")] public int Age;
@@ -121,7 +123,7 @@ namespace Light_Migrations.Tests.EditorMode
             return jsonObj;
         }
     }
-    
+
     [Migratable(1)]
     public sealed class PersonWithoutMigrationMethod
     {

@@ -77,8 +77,10 @@ namespace Light_Migrations.Runtime
                     {
                         switch (_methodHandling)
                         {
-                            case MigratorMissingMethodHandling.ThrowException: throw new MigrationException($"Migration method {methodName} not found in {objectType.Name}");
-                            case MigratorMissingMethodHandling.Ignore:         continue;
+                            case MigratorMissingMethodHandling.ThrowException: 
+                                throw new MigrationException($"Migration method {methodName} not found in {objectType.Name}");
+                            case MigratorMissingMethodHandling.Ignore:         
+                                continue;
                         }
                     }
 
