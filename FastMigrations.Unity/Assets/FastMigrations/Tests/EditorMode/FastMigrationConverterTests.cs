@@ -27,7 +27,7 @@ namespace FastMigrations.Tests.EditorMode
         public void ValidJsonV1_DeserializeStruct_Pass()
         {
             // given => json with field Version
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => deserialize json as struct
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -45,7 +45,7 @@ namespace FastMigrations.Tests.EditorMode
         public void ValidJsonV1_Deserialize_MigratorCalled()
         {
             // given => json with field Version
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => deserialize json
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -62,7 +62,7 @@ namespace FastMigrations.Tests.EditorMode
         public void ValidJsonV1_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled()
         {
             // given => json with field Version
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => deserialize json
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -78,7 +78,7 @@ namespace FastMigrations.Tests.EditorMode
         public void ValidJsonV1_MoreThenOneConverted_Pass()
         {
             // given => json with field Version
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => we have more then one converter
             var migrator1 = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -95,7 +95,7 @@ namespace FastMigrations.Tests.EditorMode
         {
             // given => json with field Version and version
             var json = @"{
-""person1"":{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1},
+""person1"":{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1},
 ""Version"":""1.2.3""
 }";
 
@@ -125,7 +125,7 @@ namespace FastMigrations.Tests.EditorMode
             // given => json with null value
             var json = @"
 {
-    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1},
+    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1},
     ""person2"":null
 }";
 
@@ -141,7 +141,7 @@ namespace FastMigrations.Tests.EditorMode
         public void ValidJsonV1_DeserializeAsV2WithoutMigrationMethod_ThrowMigrationException()
         {
             // given => json with field Version
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => deserializes json without migration method
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -154,7 +154,7 @@ namespace FastMigrations.Tests.EditorMode
         public void ValidJsonV1_DeserializeAsV2WithIgnoreMigrationMethod_Pass()
         {
             // given => json with field Version
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => deserializes json with ignore migration method
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.Ignore);
@@ -170,8 +170,8 @@ namespace FastMigrations.Tests.EditorMode
             // given => json with 2 migratable objects inside
             var json = @"
 {
-    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1},
-    ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""MigrationVersion"":1}
+    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1},
+    ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""JsonVersion"":1}
 }";
 
             // when => deserialize json
@@ -191,8 +191,8 @@ namespace FastMigrations.Tests.EditorMode
             // given => json with migratable objects inside migratable object
             var json = @"
 {
-    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1},
-    ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""MigrationVersion"":1}
+    ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1},
+    ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""JsonVersion"":1}
 }";
             // when => deserialize json
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -216,8 +216,8 @@ namespace FastMigrations.Tests.EditorMode
 {
     ""persons"":
         [
-            {""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1},
-            {""name"":""Mikhail Suvorov"",""age"":31,""MigrationVersion"":1}
+            {""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1},
+            {""name"":""Mikhail Suvorov"",""age"":31,""JsonVersion"":1}
         ]
 }";
 
@@ -239,8 +239,8 @@ namespace FastMigrations.Tests.EditorMode
 {
     ""persons"":
         [
-            {""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1},
-            {""name"":""Mikhail Suvorov"",""age"":31,""MigrationVersion"":1}
+            {""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1},
+            {""name"":""Mikhail Suvorov"",""age"":31,""JsonVersion"":1}
         ]
 }";
 
@@ -262,8 +262,8 @@ namespace FastMigrations.Tests.EditorMode
 {
     ""persons"":
     {
-        ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}, 
-        ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""MigrationVersion"":1}
+        ""person1"":{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}, 
+        ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""JsonVersion"":1}
     }
 }";
 
@@ -281,7 +281,7 @@ namespace FastMigrations.Tests.EditorMode
         public void JsonWithVersion1_DeserializeAsVersion3_Pass()
         {
             // given => json with field Version with value 1
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => deserialize json with migrator and type of version 3
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -300,7 +300,7 @@ namespace FastMigrations.Tests.EditorMode
         public void JsonWithVersion1_DeserializeAsVersion3WithoutMigrator_Exception()
         {
             // given => json with field Version with value 1
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => try to deserialize json without migrator and type of version 3
             var person = JsonConvert.DeserializeObject<PersonV2>(json);
@@ -317,7 +317,7 @@ namespace FastMigrations.Tests.EditorMode
         public void ValidJsonV1_PopulateWithMigrator_Pass()
         {
             // given => json with field Version
-            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
+            var json = @"{""name"":""Alex Kozorezov"",""age"":27,""JsonVersion"":1}";
 
             // when => populate json with migrator
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
@@ -342,8 +342,8 @@ namespace FastMigrations.Tests.EditorMode
             var jsonV2 = JsonConvert.SerializeObject(personV2, migrator);
 
             // then => there is no exception and version is written in string
-            Assert.IsTrue(jsonV1.Contains(@"""MigrationVersion"":1"));
-            Assert.IsTrue(jsonV2.Contains(@"""MigrationVersion"":2"));
+            Assert.IsTrue(jsonV1.Contains(@"""JsonVersion"":1"));
+            Assert.IsTrue(jsonV2.Contains(@"""JsonVersion"":2"));
         }
 
         [TearDown]
