@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.StandaloneTests", "Light-Migrations.StandaloneTests\Light-Migrations.StandaloneTests.csproj", "{81EAEDE2-B4E6-4FC8-A688-EE468370E904}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastMigrations.StandaloneTests", "FastMigrations.StandaloneTests\FastMigrations.StandaloneTests.csproj", "{81EAEDE2-B4E6-4FC8-A688-EE468370E904}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Standalone", "Light-Migrations.Standalone\Light-Migrations.Standalone.csproj", "{356698A4-973C-4CDA-B4C1-0497CC11A373}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastMigrations.Standalone", "FastMigrations.Standalone\FastMigrations.Standalone.csproj", "{356698A4-973C-4CDA-B4C1-0497CC11A373}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light-Migrations.Benchmark", "Light-Migrations.Benchmark\Light-Migrations.Benchmark.csproj", "{5F189D3D-1B47-4FE0-9EB5-DDF6CCD3DAC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastMigrations.Benchmark", "FastMigrations.Benchmark\FastMigrations.Benchmark.csproj", "{5F189D3D-1B47-4FE0-9EB5-DDF6CCD3DAC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

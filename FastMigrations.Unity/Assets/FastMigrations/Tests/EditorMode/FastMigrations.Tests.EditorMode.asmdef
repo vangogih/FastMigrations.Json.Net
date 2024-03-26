@@ -1,10 +1,10 @@
 {
-    "name": "EditorTests",
+    "name": "FastMigrations.Tests.EditorMode",
     "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Light-Migrations.Runtime"
+        "FastMigrations.Runtime"
     ],
     "includePlatforms": [
         "Editor"

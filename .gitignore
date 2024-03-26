@@ -349,27 +349,26 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/csharp
 
 ### Unity ###
-Light-Migrations.Unity/[Ll]ibrary/
-Light-Migrations.Unity/[Tt]emp/
-Light-Migrations.Unity/[Oo]bj/
-Light-Migrations.Unity/[Bb]uild/
-Light-Migrations.Unity/[Bb]uilds/
-Light-Migrations.Unity/Assets/AssetStoreTools*
-
-Light-Migrations.Unity/ExportedObj/
-Light-Migrations.Unity/.consulo/
-Light-Migrations.Unity/*.csproj
-Light-Migrations.Unity/*.unityproj
-Light-Migrations.Unity/*.sln
-Light-Migrations.Unity/*.suo
-Light-Migrations.Unity/*.tmp
-Light-Migrations.Unity/*.user
-Light-Migrations.Unity/*.userprefs
-Light-Migrations.Unity/*.pidb
-Light-Migrations.Unity/*.booproj
-Light-Migrations.Unity/*.svd
-Light-Migrations.Unity/bin/*
-Light-Migrations.Unity/obj/*
+FastMigrations.Unity/[Ll]ibrary/
+FastMigrations.Unity/[Tt]emp/
+FastMigrations.Unity/[Oo]bj/
+FastMigrations.Unity/[Bb]uild/
+FastMigrations.Unity/[Bb]uilds/
+FastMigrations.Unity/Assets/AssetStoreTools*
+FastMigrations.Unity/ExportedObj/
+FastMigrations.Unity/.consulo/
+FastMigrations.Unity/*.csproj
+FastMigrations.Unity/*.unityproj
+FastMigrations.Unity/*.sln
+FastMigrations.Unity/*.suo
+FastMigrations.Unity/*.tmp
+FastMigrations.Unity/*.user
+FastMigrations.Unity/*.userprefs
+FastMigrations.Unity/*.pidb
+FastMigrations.Unity/*.booproj
+FastMigrations.Unity/*.svd
+FastMigrations.Unity/bin/*
+FastMigrations.Unity/obj/*
 
 ### Rider ###
 .idea/

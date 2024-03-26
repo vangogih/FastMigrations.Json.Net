@@ -3,10 +3,11 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <IsPackable>false</IsPackable>
+        <RootNamespace>FastMigrations.Tests.EditorMode</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="..\Light-Migrations.Unity\Assets\Light-Migrations\Tests\EditorMode\**\*.cs" />
+        <Compile Include="..\FastMigrations.Unity\Assets\FastMigrations\Tests\EditorMode\**\*.cs" />
     </ItemGroup>
 
     <ItemGroup>
@@ -16,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Light-Migrations.Standalone\Light-Migrations.Standalone.csproj" />
+      <ProjectReference Include="..\FastMigrations.Standalone\FastMigrations.Standalone.csproj" />
     </ItemGroup>
 
 </Project>

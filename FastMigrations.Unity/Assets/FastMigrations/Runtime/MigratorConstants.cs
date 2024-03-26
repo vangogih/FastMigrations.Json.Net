@@ -1,4 +1,4 @@
-﻿namespace Light_Migrations.Runtime
+﻿namespace FastMigrations.Runtime
 {
     internal static class MigratorConstants
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Light_Migrations.Runtime
+namespace FastMigrations.Runtime
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = true, AllowMultiple = false)]
     public class MigratableAttribute : 

@@ -3,7 +3,8 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
-        <RootNamespace>Light_Migrations.Benchmark</RootNamespace>
+        <IsPackable>false</IsPackable>
+        <RootNamespace>FastMigrations.Benchmark</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,8 +13,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Light-Migrations.StandaloneTests\Light-Migrations.StandaloneTests.csproj" />
-      <ProjectReference Include="..\Light-Migrations.Standalone\Light-Migrations.Standalone.csproj" />
+      <ProjectReference Include="..\FastMigrations.StandaloneTests\FastMigrations.StandaloneTests.csproj" />
+      <ProjectReference Include="..\FastMigrations.Standalone\FastMigrations.Standalone.csproj" />
     </ItemGroup>
 
 </Project>

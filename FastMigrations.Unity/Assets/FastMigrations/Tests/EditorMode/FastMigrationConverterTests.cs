@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Light_Migrations.Runtime;
+using FastMigrations.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NUnit.Framework;
 
-namespace Light_Migrations.Tests.EditorMode
+namespace FastMigrations.Tests.EditorMode
 {
-    public sealed class LightMigrationConverterTests
+    public sealed class FastMigrationConverterTests
     {
         [Test]
         public void EmptyJson_Deserialize_Exception()
@@ -15,7 +15,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{}";
 
             // when => deserialize json
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
 
             // then => throws MigrationException
             PersonV1 person = null;
@@ -30,7 +30,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => deserialize json as struct
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
 
             // then => there is no exception
             PersonStructV1 person = default;
@@ -48,7 +48,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => deserialize json
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var person = JsonConvert.DeserializeObject<PersonV1>(json, migrator);
 
             // then => we run migrator and call Migrate() on model
@@ -65,7 +65,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => deserialize json
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var person = JsonConvert.DeserializeObject<PersonJsonCtor>(json, migrator);
 
             // then => we run migrator and call Migrate() and JsonCtor on model
@@ -81,7 +81,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => we have more then one converter
-            var migrator1 = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator1 = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var randomConverter = new ReadConverterMock();
 
             // then => there is no exception AND person is not an empty
@@ -100,7 +100,7 @@ namespace Light_Migrations.Tests.EditorMode
 }";
 
             // when => we have more then one migrator
-            var migrator1 = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator1 = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var migrator2 = new VersionConverter();
 
             // then => there is no exception
@@ -130,7 +130,7 @@ namespace Light_Migrations.Tests.EditorMode
 }";
 
             // when => deserialize json
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
 
             // then => there is no exception
             Assert.Throws<JsonReaderException>(() => JsonConvert.DeserializeObject<TwoPersonsMigratableMock>(json, migrator));
@@ -144,7 +144,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => deserializes json without migration method
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
 
             // then => throws MigrationException
             Assert.Throws<MigrationException>(() => JsonConvert.DeserializeObject<PersonWithoutMigrationMethod>(json, migrator));
@@ -157,7 +157,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => deserializes json with ignore migration method
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.Ignore);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.Ignore);
 
             // then => there is no exception
             var person = JsonConvert.DeserializeObject<PersonWithoutMigrationMethod>(json, migrator);
@@ -175,7 +175,7 @@ namespace Light_Migrations.Tests.EditorMode
 }";
 
             // when => deserialize json
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var persons = JsonConvert.DeserializeObject<TwoPersonsNotMigratableMock>(json, migrator);
 
             // then => there is not exception
@@ -195,7 +195,7 @@ namespace Light_Migrations.Tests.EditorMode
     ""person2"":{""name"":""Mikhail Suvorov"",""age"":31,""MigrationVersion"":1}
 }";
             // when => deserialize json
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var persons = JsonConvert.DeserializeObject<TwoPersonsMigratableMock>(json, migrator);
 
             // then => there is not exception
@@ -222,7 +222,7 @@ namespace Light_Migrations.Tests.EditorMode
 }";
 
             // when => deserialize json with migrator
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var persons = JsonConvert.DeserializeObject<PersonsDataStructureMock<PersonV1[]>>(json, migrator);
 
             // then => there is no exception
@@ -245,7 +245,7 @@ namespace Light_Migrations.Tests.EditorMode
 }";
 
             // when => deserialize json with migrator
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var persons = JsonConvert.DeserializeObject<PersonsDataStructureMock<List<PersonV1>>>(json, migrator);
 
             // then => there is no exception
@@ -268,7 +268,7 @@ namespace Light_Migrations.Tests.EditorMode
 }";
 
             // when => deserialize json with migrator
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var persons = JsonConvert.DeserializeObject<PersonsDataStructureMock<Dictionary<string, PersonV1>>>(json, migrator);
 
             // then => there is no exception
@@ -284,7 +284,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => deserialize json with migrator and type of version 3
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var person = JsonConvert.DeserializeObject<PersonV2>(json, migrator);
 
             // then => there is no exception
@@ -320,7 +320,7 @@ namespace Light_Migrations.Tests.EditorMode
             var json = @"{""name"":""Alex Kozorezov"",""age"":27,""MigrationVersion"":1}";
 
             // when => populate json with migrator
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var person = new PersonV1 { Name = "Mikhail Suvorov", Age = 31 };
             JsonConvert.PopulateObject(json, person, new JsonSerializerSettings { Converters = { migrator } });
 
@@ -337,7 +337,7 @@ namespace Light_Migrations.Tests.EditorMode
             var personV2 = new PersonV2 { FullName = "Alex Kozorezov", Name = "Alex", Surname = "Kozorezov", BirthYear = 1997 };
 
             // when => serialize object
-            var migrator = new LightMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
             var jsonV1 = JsonConvert.SerializeObject(personV1, migrator);
             var jsonV2 = JsonConvert.SerializeObject(personV2, migrator);
 

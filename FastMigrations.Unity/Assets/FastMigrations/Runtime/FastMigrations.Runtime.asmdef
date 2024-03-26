@@ -1,5 +1,5 @@
 {
-    "name": "Light-Migrations.Runtime",
+    "name": "FastMigrations.Runtime",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],

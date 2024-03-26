@@ -3,12 +3,12 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Running;
-using Light_Migrations.Runtime;
+using FastMigrations.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Weingartner.Json.Migration;
 
-namespace Light_Migrations.Benchmark
+namespace FastMigrations.Benchmark
 {
     public class Program
     {
@@ -28,8 +28,8 @@ namespace Light_Migrations.Benchmark
         private static JObject Migrate_1(JObject data, JsonSerializer serializer) => data;
     }
 
-    [Light_Migrations.Runtime.Migratable(1)]
-    public sealed class LightPersonBenchmarkModel
+    [FastMigrations.Runtime.Migratable(1)]
+    public sealed class FastPersonBenchmarkModel
     {
         [JsonProperty("name")] public string Name;
         [JsonProperty("age")] public int Age;
@@ -44,16 +44,16 @@ namespace Light_Migrations.Benchmark
     {
         private const string PersonJson = "{\"name\":\"John\",\"age\":30}";
         private static readonly WeingartnerPersonBenchmarkModel _weingartnerPersonObject = new WeingartnerPersonBenchmarkModel { Name = "John", Age = 30 };
-        private static readonly LightPersonBenchmarkModel _lightPersonObject = new LightPersonBenchmarkModel { Name = "John", Age = 30 };
+        private static readonly FastPersonBenchmarkModel _fastPersonObject = new FastPersonBenchmarkModel { Name = "John", Age = 30 };
 
-        private JsonSerializerSettings _lightSettings;
+        private JsonSerializerSettings _fastSettings;
         private JsonSerializerSettings _weingartnerSettings;
 
         [IterationSetup]
         public void Setup()
         {
-            var lightMigrationsConverter = new Light_Migrations.Runtime.LightMigrationsConverter(MigratorMissingMethodHandling.ThrowException);
-            _lightSettings = new JsonSerializerSettings { Converters = new List<JsonConverter> { lightMigrationsConverter } };
+            var fastMigrationsConverter = new FastMigrations.Runtime.FastMigrationsConverter(MigratorMissingMethodHandling.ThrowException);
+            _fastSettings = new JsonSerializerSettings { Converters = new List<JsonConverter> { fastMigrationsConverter } };
 
             var weingartnerMigrator = new Weingartner.Json.Migration.MigrationConverter(new HashBasedDataMigrator<JToken>(new JsonVersionUpdater()));
             _weingartnerSettings = new JsonSerializerSettings { Converters = new List<JsonConverter> { weingartnerMigrator } };
@@ -68,9 +68,9 @@ namespace Light_Migrations.Benchmark
 
         [Benchmark]
         [BenchmarkCategory("Serialize")]
-        public void LightMigrations_Serialize()
+        public void FastMigrations_Serialize()
         {
-            JsonConvert.SerializeObject(_lightPersonObject, _lightSettings);
+            JsonConvert.SerializeObject(_fastPersonObject, _fastSettings);
         }
 
         [Benchmark]
@@ -89,9 +89,9 @@ namespace Light_Migrations.Benchmark
         
         [Benchmark]
         [BenchmarkCategory("Deserialize")]
-        public void LightMigrations_Deserialize()
+        public void FastMigrations_Deserialize()
         {
-            JsonConvert.DeserializeObject<LightPersonBenchmarkModel>(PersonJson, _lightSettings);
+            JsonConvert.DeserializeObject<FastPersonBenchmarkModel>(PersonJson, _fastSettings);
         }
 
         [Benchmark]

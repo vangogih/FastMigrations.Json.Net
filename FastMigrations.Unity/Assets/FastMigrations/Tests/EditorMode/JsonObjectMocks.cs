@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Light_Migrations.Runtime;
+using FastMigrations.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Light_Migrations.Tests.EditorMode
+namespace FastMigrations.Tests.EditorMode
 {
     public static class MethodCallHandler
     {

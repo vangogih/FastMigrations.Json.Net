@@ -2,9 +2,10 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>FastMigrations.Runtime</RootNamespace>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="..\Light-Migrations.Unity\Assets\Light-Migrations\Runtime\**\*.cs" />
+        <Compile Include="..\FastMigrations.Unity\Assets\FastMigrations\Runtime\**\*.cs" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

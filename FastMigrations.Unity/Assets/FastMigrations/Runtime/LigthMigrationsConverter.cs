@@ -4,7 +4,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Light_Migrations.Runtime
+namespace FastMigrations.Runtime
 {
     public enum MigratorMissingMethodHandling
     {
@@ -12,7 +12,7 @@ namespace Light_Migrations.Runtime
         Ignore
     }
 
-    public class LightMigrationsConverter : JsonConverter
+    public class FastMigrationsConverter : JsonConverter
     {
         public override bool CanRead => true;
         public override bool CanWrite => true;
@@ -20,7 +20,7 @@ namespace Light_Migrations.Runtime
         private readonly MigratorMissingMethodHandling _methodHandling;
         private readonly HashSet<Type> _migrationInProgress = new();
 
-        public LightMigrationsConverter(MigratorMissingMethodHandling methodHandling)
+        public FastMigrationsConverter(MigratorMissingMethodHandling methodHandling)
         {
             _methodHandling = methodHandling;
         }

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Reflection;
-using Light_Migrations.Runtime;
+using FastMigrations.Runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Light_Migrations.Tests.EditorMode
+namespace FastMigrations.Tests.EditorMode
 {
     public sealed class ReadConverterMock : JsonConverter
     {
@@ -23,13 +23,13 @@ namespace Light_Migrations.Tests.EditorMode
         }
     }
 
-    public sealed class LightMigrationsConverterMock : LightMigrationsConverter
+    public sealed class FastMigrationsConverterMock : FastMigrationsConverter
     {
         public int ReadJsonCalledCount;
 
         public int WriteJsonCalledCount;
 
-        public LightMigrationsConverterMock(MigratorMissingMethodHandling methodHandling)
+        public FastMigrationsConverterMock(MigratorMissingMethodHandling methodHandling)
             : base(methodHandling) { }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
