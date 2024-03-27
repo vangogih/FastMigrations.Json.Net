@@ -10,9 +10,9 @@ namespace FastMigrations.Runtime
         System.Attribute
 #endif
     {
-        public int Version { get; }
+        public readonly uint Version;
 
-        public MigratableAttribute(int version)
+        public MigratableAttribute(uint version)
         {
             Version = version;
         }

@@ -8,35 +8,41 @@ namespace FastMigrations.Tests.EditorMode
 {
     public static class MethodCallHandler
     {
-        public static IReadOnlyDictionary<Type, MethodCallInfo> VersionCalledCount => _versionCalledCount;
-        private static readonly Dictionary<Type, MethodCallInfo> _versionCalledCount = new();
+        public static IReadOnlyDictionary<Type, MethodsCallInfo> MethodsCallInfoByType => m_methodsCallInfoByType;
+        private static readonly Dictionary<Type, MethodsCallInfo> m_methodsCallInfoByType = new();
 
         public static void RegisterMethodCall(Type type, string methodName)
         {
             var methodVersion = int.Parse(methodName.Split('_')[1]);
 
-            if (_versionCalledCount.ContainsKey(type))
-                _versionCalledCount[type].MethodCallCount++;
+            if (m_methodsCallInfoByType.ContainsKey(type))
+                m_methodsCallInfoByType[type].VersionsCalled.Add(methodVersion);
             else
-                _versionCalledCount.Add(type, new MethodCallInfo(methodVersion, 1));
+                m_methodsCallInfoByType.Add(type, new MethodsCallInfo(methodVersion));
         }
 
         public static void Clear()
         {
-            _versionCalledCount.Clear();
+            m_methodsCallInfoByType.Clear();
         }
 
-        public class MethodCallInfo
+        public class MethodsCallInfo
         {
-            public int MethodVersion;
-            public int MethodCallCount;
+            public readonly List<int> VersionsCalled;
+            public int MethodCallCount => VersionsCalled.Count;
 
-            public MethodCallInfo(int methodVersion, int methodCallCount)
+            public MethodsCallInfo(int methodVersions)
             {
-                MethodVersion = methodVersion;
-                MethodCallCount = methodCallCount;
+                VersionsCalled = new List<int> { methodVersions };
             }
         }
+    }
+    
+    [Migratable(0)]
+    public sealed class PersonV0WithoutMigrateMethod
+    {
+        [JsonProperty("name")] public string Name;
+        [JsonProperty("age")] public int Age;
     }
 
     [Migratable(1)]
@@ -125,13 +131,13 @@ namespace FastMigrations.Tests.EditorMode
     }
 
     [Migratable(1)]
-    public sealed class PersonWithoutMigrationMethod
+    public sealed class PersonV1WithoutMigrationMethod
     {
         [JsonProperty("name")] public string Name;
         [JsonProperty("age")] public int Age;
     }
 
-    public class TwoPersonsNotMigratableMock
+    public class TwoPersonsV1NotMigratableMock
     {
         [JsonProperty("person1")] public PersonV1 Person1;
         [JsonProperty("person2")] public PersonV1 Person2;
