@@ -1,4 +1,15 @@
-<img src="https://github.com/vangogih/FastMigrations.Json.Net/assets/30757221/e5041259-3b11-4364-aeae-657b2551f3e8" data-canonical-src="https://github.com/vangogih/FastMigrations.Json.Net/assets/30757221/e5041259-3b11-4364-aeae-657b2551f3e8" width="128" height="128" />
+<img alt="logo" src="https://github.com/vangogih/FastMigrations.Json.Net/assets/30757221/e5041259-3b11-4364-aeae-657b2551f3e8" height="128px" />
 
-FastMigrations.Json.Net
-===
+# FastMigrations.Json.Net
+
+![](https://img.shields.io/badge/unity-2018.3+-000.svg)
+
+Provides an efficient way to write json file migrations for `Unity` and `dotnet`
+
+- At least 5-10x times faster then [Migrations.Json.Net](https://github.com/Weingartner/Migrations.Json.Net/tree/master). See Benchmarks
+- Compatible with:
+  - Unity 2018.3+ and IL2CPP backend
+  - [Newtonsoft Json Unity Package 2.+](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@2.0/manual/index.html)
+  - Newtonsoft.Json version 12.+
+- Small code size: Few internal types and few .callvirt.
+- Immutable: Thread safety and robustness.
