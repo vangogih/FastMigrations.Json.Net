@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -19,9 +20,12 @@ namespace FastMigrations.Runtime
         private delegate JObject MigrateMethod(JObject data);
 
         private readonly MigratorMissingMethodHandling _methodHandling;
-        private readonly HashSet<Type> _migrationInProgress = new();
-        private readonly Dictionary<Type, MigratableAttribute> _attributeByTypeCache = new();
-        private readonly Dictionary<Type, Dictionary<int, MigrateMethod>> _migrateMethodsByType = new();
+        
+        // Because Microsoft decided to not implement a proper ConcurrentHashSet. Source: https://github.com/dotnet/runtime/issues/39919
+        private const byte DummyByte = 0;
+        private readonly IDictionary<Type, byte> _migrationInProgress = new ConcurrentDictionary<Type, byte>();
+        private readonly IDictionary<Type, MigratableAttribute> _attributeByTypeCache = new ConcurrentDictionary<Type, MigratableAttribute>();
+        private readonly IDictionary<Type, IDictionary<int, MigrateMethod>> _migrateMethodsByType = new ConcurrentDictionary<Type, IDictionary<int, MigrateMethod>>();
 
         public FastMigrationsConverter(MigratorMissingMethodHandling methodHandling)
         {
@@ -30,14 +34,17 @@ namespace FastMigrations.Runtime
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
+            if (value == null)
+                return;
+
             Type valueType = value.GetType();
 
             try
             {
-                if (_migrationInProgress.Contains(valueType))
+                if (_migrationInProgress.ContainsKey(valueType))
                     return;
 
-                _migrationInProgress.Add(valueType);
+                _migrationInProgress.Add(valueType, DummyByte);
 
                 var jObject = JObject.FromObject(value, serializer);
                 var migratableAttribute = GetMigratableAttribute(valueType, _attributeByTypeCache);
@@ -55,10 +62,10 @@ namespace FastMigrations.Runtime
         {
             try
             {
-                if (_migrationInProgress.Contains(objectType))
+                if (_migrationInProgress.ContainsKey(objectType))
                     return existingValue;
 
-                _migrationInProgress.Add(objectType);
+                _migrationInProgress.Add(objectType, DummyByte);
 
                 var jObject = JObject.Load(reader);
                 int fromVersion = MigratorConstants.DefaultVersion;
@@ -67,7 +74,7 @@ namespace FastMigrations.Runtime
                     fromVersion = jObject[MigratorConstants.VersionJsonFieldName]!.ToObject<int>();
 
                 var migratableAttribute = GetMigratableAttribute(objectType, _attributeByTypeCache);
-                int toVersion = migratableAttribute.Version;
+                int toVersion = migratableAttribute.Version < fromVersion ? fromVersion : migratableAttribute.Version;
 
                 for (int currVersion = fromVersion; currVersion <= toVersion; currVersion++)
                 {
@@ -110,10 +117,10 @@ namespace FastMigrations.Runtime
         public override bool CanConvert(Type objectType)
         {
             bool isMigratable = GetMigratableAttribute(objectType, _attributeByTypeCache) != null;
-            return isMigratable && !_migrationInProgress.Contains(objectType);
+            return isMigratable && !_migrationInProgress.ContainsKey(objectType);
         }
 
-        private static MigratableAttribute GetMigratableAttribute(Type objectType, Dictionary<Type, MigratableAttribute> cache)
+        private static MigratableAttribute GetMigratableAttribute(Type objectType, IDictionary<Type, MigratableAttribute> cache)
         {
             if (cache.TryGetValue(objectType, out MigratableAttribute attribute))
                 return attribute;
@@ -123,11 +130,11 @@ namespace FastMigrations.Runtime
             return attribute;
         }
         
-        private static MigrateMethod GetMigrateMethod(Type objectType, int version, Dictionary<Type, Dictionary<int, MigrateMethod>> cache)
+        private static MigrateMethod GetMigrateMethod(Type objectType, int version, IDictionary<Type, IDictionary<int, MigrateMethod>> cache)
         {
-            if (!cache.TryGetValue(objectType, out Dictionary<int, MigrateMethod> methodsByVersion))
+            if (!cache.TryGetValue(objectType, out IDictionary<int, MigrateMethod> methodsByVersion))
             {
-                methodsByVersion = new Dictionary<int, MigrateMethod>();
+                methodsByVersion = new ConcurrentDictionary<int, MigrateMethod>();
                 cache[objectType] = methodsByVersion;
             }
 
