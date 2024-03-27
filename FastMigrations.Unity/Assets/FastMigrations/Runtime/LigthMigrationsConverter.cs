@@ -23,12 +23,16 @@ namespace FastMigrations.Runtime
         
         // Because Microsoft decided to not implement a proper ConcurrentHashSet. Source: https://github.com/dotnet/runtime/issues/39919
         private const byte DummyByte = 0;
-        private readonly IDictionary<Type, byte> _migrationInProgress = new ConcurrentDictionary<Type, byte>();
-        private readonly IDictionary<Type, MigratableAttribute> _attributeByTypeCache = new ConcurrentDictionary<Type, MigratableAttribute>();
-        private readonly IDictionary<Type, IDictionary<int, MigrateMethod>> _migrateMethodsByType = new ConcurrentDictionary<Type, IDictionary<int, MigrateMethod>>();
+        private readonly IDictionary<Type, byte> _migrationInProgress;
+        private readonly IDictionary<Type, MigratableAttribute> _attributeByTypeCache;
+        private readonly IDictionary<Type, IDictionary<int, MigrateMethod>> _migrateMethodsByType;
 
         public FastMigrationsConverter(MigratorMissingMethodHandling methodHandling)
         {
+            _migrationInProgress = new ConcurrentDictionary<Type, byte>();
+            _attributeByTypeCache = new ConcurrentDictionary<Type, MigratableAttribute>();
+            _migrateMethodsByType = new ConcurrentDictionary<Type, IDictionary<int, MigrateMethod>>();
+
             _methodHandling = methodHandling;
         }
 
