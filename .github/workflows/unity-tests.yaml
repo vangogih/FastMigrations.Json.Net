@@ -1,4 +1,4 @@
-﻿name: unity-19-23-tests
+﻿name: unity-tests
 
 on:
   push:
@@ -44,13 +44,16 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload test results 
-        steps:
-          uses: actions/upload-artifact@v3
-          if: always()
-          with:
-            name: Test results
-            path: ${{ steps.unity-test.outputs.artifactsPath }}
-          and:
-            name: Coverage results
-            path: ${{ steps.unity-test.outputs.coveragePath  }}
+      - name: Upload test result artifacts
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Test results for ${{ matrix.testMode }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
+      
+      - name: Upload test coverage results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: Coverage results for ${{ matrix.testMode }}
+          path: ${{ steps.tests.outputs.coveragePath }}
