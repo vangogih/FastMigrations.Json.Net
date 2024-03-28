@@ -51,7 +51,7 @@ jobs:
         if: always()
         with:
           name: test-results-${{ matrix.unityVersion }}
-          path: ${{ steps.tests.outputs.artifactsPath }}
+          path: ${{ steps.unity-test.outputs.artifactsPath }}
       
       - name: Upload coverage result artifacts
         uses: actions/upload-artifact@v3
