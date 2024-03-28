@@ -4,6 +4,7 @@
 
 ![](https://img.shields.io/badge/unity-2019.3+-000.svg)
 [![dotnet-tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/dotnet-tests.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/dotnet-tests.yaml)
+[![unity-19-23-tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/unity-2019-2023-tests.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/unity-2019-2023-tests.yaml)
 
 Provides an efficient way to write json file migrations for `Unity` and `dotnet`
 
