@@ -1,0 +1,23 @@
+﻿name: Test
+
+on:
+  push:
+    branches:
+      - "github_actions"
+  pull_request:
+    branches:
+      - "github_actions"
+
+jobs:
+  test-dotnet:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      NUGET_XMLDOC_MODE: skip
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 5.0.x
+      - run: dotnet test -c Debug ./FastMigrations.StandaloneTests
