@@ -1,4 +1,4 @@
-﻿name: unity-2018-2023-tests
+﻿name: unity-19-23-tests
 
 on:
   push:

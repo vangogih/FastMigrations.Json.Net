@@ -2,14 +2,14 @@
 
 # FastMigrations.Json.Net
 
-![](https://img.shields.io/badge/unity-2018.3+-000.svg)
+![](https://img.shields.io/badge/unity-2019.3+-000.svg)
 [![dotnet-tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/dotnet-tests.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/dotnet-tests.yaml)
 
 Provides an efficient way to write json file migrations for `Unity` and `dotnet`
 
 - At least 5-10x times faster then [Migrations.Json.Net](https://github.com/Weingartner/Migrations.Json.Net/tree/master). See Benchmarks
 - Compatible with:
-  - Unity 2018.3+ and IL2CPP backend
+  - Unity 2019.3+ and IL2CPP backend
   - [Newtonsoft Json Unity Package 2.+](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@2.0/manual/index.html)
   - Newtonsoft.Json version 12.+
 - Small code size: Few internal types and few .callvirt.
