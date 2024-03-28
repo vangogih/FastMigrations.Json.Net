@@ -9,7 +9,7 @@ namespace FastMigrations.Tests.EditorMode
     public static class MethodCallHandler
     {
         public static IReadOnlyDictionary<Type, MethodsCallInfo> MethodsCallInfoByType => m_methodsCallInfoByType;
-        private static readonly Dictionary<Type, MethodsCallInfo> m_methodsCallInfoByType = new();
+        private static readonly Dictionary<Type, MethodsCallInfo> m_methodsCallInfoByType = new Dictionary<Type, MethodsCallInfo>();
 
         public static void RegisterMethodCall(Type type, string methodName)
         {
