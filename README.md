@@ -3,6 +3,7 @@
 # FastMigrations.Json.Net
 
 ![](https://img.shields.io/badge/unity-2018.3+-000.svg)
+[![dotnet-tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/dotnet-tests.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/dotnet-tests.yaml)
 
 Provides an efficient way to write json file migrations for `Unity` and `dotnet`
 
