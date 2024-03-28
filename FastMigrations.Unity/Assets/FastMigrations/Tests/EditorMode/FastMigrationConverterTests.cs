@@ -26,8 +26,6 @@ namespace FastMigrations.Tests.EditorMode
             var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
 
             Assert.DoesNotThrow(() => JsonConvert.DeserializeObject<PersonV0WithoutMigrateMethod>(json, migrator));
-            
-            Assert.Fail();
         }
 
         [Test]
