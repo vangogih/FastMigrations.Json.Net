@@ -173,6 +173,49 @@ namespace FastMigrations.Tests.EditorMode
         }
 
         [Test]
+        public void MigratableParentWithMigratableChild_Deserialize_MigratorCalled()
+        {
+            var json = @"{}";
+
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.Ignore);
+            var childV10 = JsonConvert.DeserializeObject<ChildV10Mock>(json, migrator);
+
+            Assert.NotNull(childV10);
+            MethodCallHandler.MethodsCallInfo childCallInfo = MethodCallHandler.MethodsCallInfoByType[typeof(ChildV10Mock)];
+            MethodCallHandler.MethodsCallInfo parentCallInfo = MethodCallHandler.MethodsCallInfoByType[typeof(ParentMock)];
+
+            Assert.AreEqual(3, childCallInfo.MethodCallCount);
+            Assert.AreEqual(1, childCallInfo.VersionsCalled[0]);
+            Assert.AreEqual(2, childCallInfo.VersionsCalled[1]);
+            Assert.AreEqual(10, childCallInfo.VersionsCalled[2]);
+
+            Assert.AreEqual(2, parentCallInfo.MethodCallCount);
+            Assert.AreEqual(1, parentCallInfo.VersionsCalled[0]);
+            Assert.AreEqual(2, parentCallInfo.VersionsCalled[1]);
+        }
+
+        [Test]
+        public void NestedJson_Deserialize_Pass()
+        {
+            var json = @"
+{""name"":""Alex Kozorezov"",
+    ""person"":{""name"":""Mikhail Suvorov"", 
+        ""person"": {""name"":""I'm fan of CySharp fan""}
+    }
+}";
+
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            var person = JsonConvert.DeserializeObject<PersonV1NestedMock>(json, migrator);
+
+            Assert.NotNull(person);
+            Assert.AreEqual("Alex Kozorezov", person.Name);
+
+            MethodCallHandler.MethodsCallInfo methodsCallInfo = MethodCallHandler.MethodsCallInfoByType[typeof(PersonV1NestedMock)];
+            Assert.AreEqual(1, methodsCallInfo.MethodCallCount);
+            Assert.AreEqual(1, methodsCallInfo.VersionsCalled[0]);
+        }
+
+        [Test]
         public void Array_Deserialize_MigratorCalled()
         {
             var json = @"
@@ -228,7 +271,7 @@ namespace FastMigrations.Tests.EditorMode
             Assert.NotNull(persons);
             Assert.AreEqual(2, MethodCallHandler.MethodsCallInfoByType[typeof(PersonV1)].MethodCallCount);
         }
-        
+
         [Test]
         public void JsonWithoutVersion_DeserializeAsVersion2_Pass()
         {

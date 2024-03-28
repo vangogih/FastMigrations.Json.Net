@@ -37,7 +37,7 @@ namespace FastMigrations.Tests.EditorMode
             }
         }
     }
-    
+
     [Migratable(0)]
     public sealed class PersonV0WithoutMigrateMethod
     {
@@ -165,5 +165,58 @@ namespace FastMigrations.Tests.EditorMode
     public class PersonsDataStructureMock<T>
     {
         [JsonProperty("persons")] public T Persons;
+    }
+
+    [Migratable(2)]
+    public class ParentMock
+    {
+        protected static JObject Migrate_1(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(ParentMock), nameof(Migrate_1));
+            return jsonObj;
+        }
+
+        protected static JObject Migrate_2(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(ParentMock), nameof(Migrate_2));
+            return jsonObj;
+        }
+    }
+
+    [Migratable(10)]
+    public class ChildV10Mock : ParentMock
+    {
+        private static JObject Migrate_1(JObject jsonObj)
+        {
+            jsonObj = ParentMock.Migrate_1(jsonObj);
+            MethodCallHandler.RegisterMethodCall(typeof(ChildV10Mock), nameof(Migrate_1));
+            return jsonObj;
+        }
+
+        private static JObject Migrate_2(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(ChildV10Mock), nameof(Migrate_2));
+            return jsonObj;
+        }
+
+        private static JObject Migrate_10(JObject jsonObj)
+        {
+            jsonObj = ParentMock.Migrate_2(jsonObj);
+            MethodCallHandler.RegisterMethodCall(typeof(ChildV10Mock), nameof(Migrate_10));
+            return jsonObj;
+        }
+    }
+
+    [Migratable(1)]
+    public class PersonV1NestedMock
+    {
+        [JsonProperty("name")] public string Name;
+        [JsonProperty("child")] public PersonV1NestedMock Child;
+
+        private static JObject Migrate_1(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(PersonV1NestedMock), nameof(Migrate_1));
+            return jsonObj;
+        }
     }
 }

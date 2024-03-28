@@ -2,8 +2,8 @@
 
 namespace FastMigrations.Runtime
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = true, AllowMultiple = false)]
-    public class MigratableAttribute : 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false, AllowMultiple = false)]
+    public class MigratableAttribute :
 #if UNITY_2018_3_OR_NEWER
         UnityEngine.Scripting.PreserveAttribute
 #else 
