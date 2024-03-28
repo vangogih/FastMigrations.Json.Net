@@ -47,7 +47,7 @@ jobs:
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport'
 
       - name: Upload test result artifacts  
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: test-results-${{ matrix.unityVersion }}
