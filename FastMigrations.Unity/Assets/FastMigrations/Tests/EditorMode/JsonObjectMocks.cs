@@ -94,7 +94,7 @@ namespace FastMigrations.Tests.EditorMode
             jsonObj.Add("birthYear", DateTime.Today.Year - ageToken.ToObject<int>());
             jsonObj.Remove("age");
 
-            var oldNameSplit = nameToken.ToObject<string>()!.Split(' ');
+            var oldNameSplit = nameToken.ToObject<string>().Split(' ');
             jsonObj.Remove("name");
             jsonObj.Add("name", oldNameSplit[0]);
             jsonObj.Add("surname", oldNameSplit[1]);

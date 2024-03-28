@@ -42,10 +42,10 @@ namespace FastMigrations.Runtime
 
             try
             {
-                if (_migrationInProgress.Value!.Contains(valueType))
+                if (_migrationInProgress.Value.Contains(valueType))
                     return;
 
-                _migrationInProgress.Value!.Add(valueType);
+                _migrationInProgress.Value.Add(valueType);
 
                 var jObject = JObject.FromObject(value, serializer);
                 var migratableAttribute = GetMigratableAttribute(valueType, _attributeByTypeCache);
@@ -54,7 +54,7 @@ namespace FastMigrations.Runtime
             }
             finally
             {
-                _migrationInProgress.Value!.Remove(valueType);
+                _migrationInProgress.Value.Remove(valueType);
             }
         }
 
@@ -63,21 +63,21 @@ namespace FastMigrations.Runtime
         {
             try
             {
-                if (_migrationInProgress.Value!.Contains(objectType))
+                if (_migrationInProgress.Value.Contains(objectType))
                     return existingValue;
 
-                _migrationInProgress.Value!.Add(objectType);
+                _migrationInProgress.Value.Add(objectType);
 
                 var jObject = JObject.Load(reader);
 
                 //don't try and repeat migration for objects serialized as refs to previous
                 if (jObject["$ref"] != null)
-                    return serializer.ReferenceResolver?.ResolveReference(serializer, ((string)jObject["$ref"])!);
+                    return serializer.ReferenceResolver?.ResolveReference(serializer, (string)jObject["$ref"]);
 
                 int fromVersion = MigratorConstants.DefaultVersion;
 
                 if (jObject.ContainsKey(MigratorConstants.VersionJsonFieldName))
-                    fromVersion = jObject[MigratorConstants.VersionJsonFieldName]!.ToObject<int>();
+                    fromVersion = jObject[MigratorConstants.VersionJsonFieldName].ToObject<int>();
 
                 var migratableAttribute = GetMigratableAttribute(objectType, _attributeByTypeCache);
                 uint toVersion = migratableAttribute.Version;
@@ -88,23 +88,26 @@ namespace FastMigrations.Runtime
 
                 if (existingValue != null && serializer.ObjectCreationHandling != ObjectCreationHandling.Replace)
                 {
-                    using JsonReader jObjReader = jObject.CreateReader();
-                    serializer.Populate(jObjReader, existingValue);
-                    return existingValue;
+                    using (JsonReader jObjReader = jObject.CreateReader())
+                    {
+
+                        serializer.Populate(jObjReader, existingValue); 
+                        return existingValue;
+                    }
                 }
 
                 return jObject.ToObject(objectType, serializer);
             }
             finally
             {
-                _migrationInProgress.Value!.Remove(objectType);
+                _migrationInProgress.Value.Remove(objectType);
             }
         }
 
         public override bool CanConvert(Type objectType)
         {
             bool isMigratable = GetMigratableAttribute(objectType, _attributeByTypeCache) != null;
-            return isMigratable && !_migrationInProgress.Value!.Contains(objectType);
+            return isMigratable && !_migrationInProgress.Value.Contains(objectType);
         }
 
         private JObject RunMigrations(JObject jObject, Type objectType, int fromVersion,
@@ -132,7 +135,7 @@ namespace FastMigrations.Runtime
                     }
                 }
 
-                jObject = migrationMethod!(jObject);
+                jObject = migrationMethod(jObject);
             }
             return jObject;
         }

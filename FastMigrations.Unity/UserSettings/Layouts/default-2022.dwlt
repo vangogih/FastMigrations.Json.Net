@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 25
+  controlID: 17
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -382,7 +382,7 @@ MonoBehaviour:
       name: Light-Migrations.Json.Net
       fullName: Light-Migrations.Json.Net
       resultStatus: 1
-      duration: 0.3082195
+      duration: 0.3075846
       messages: 
       output: 
       stacktrace: 
@@ -393,12 +393,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1003
-      uniqueId: '[EditorTests.dll][suite]'
-      name: EditorTests.dll
-      fullName: F:/Projects/Rider/Light-Migrations.Json.Net/Light-Migrations/Library/ScriptAssemblies/EditorTests.dll
+    - id: 1021
+      uniqueId: '[FastMigrations.Tests.EditorMode.dll][suite]'
+      name: FastMigrations.Tests.EditorMode.dll
+      fullName: F:/Projects/Rider/FastMigrations.Json.Net/FastMigrations.Unity/Library/ScriptAssemblies/FastMigrations.Tests.EditorMode.dll
       resultStatus: 1
-      duration: 0.2475976
+      duration: 0.2779657
       messages: 
       output: 
       stacktrace: 
@@ -409,12 +409,12 @@ MonoBehaviour:
       categories: []
       parentId: 1000
       parentUniqueId: '[Light-Migrations.Json.Net][suite]'
-    - id: 1004
-      uniqueId: EditorTests.dll/[Light_Migrations][suite]
-      name: Light_Migrations
-      fullName: Light_Migrations
+    - id: 1022
+      uniqueId: FastMigrations.Tests.EditorMode.dll/[FastMigrations][suite]
+      name: FastMigrations
+      fullName: FastMigrations
       resultStatus: 1
-      duration: 0.2470085
+      duration: 0.2761799
       messages: 
       output: 
       stacktrace: 
@@ -423,14 +423,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1003
-      parentUniqueId: '[EditorTests.dll][suite]'
-    - id: 1005
-      uniqueId: EditorTests.dll/Light_Migrations/[Tests][suite]
+      parentId: 1021
+      parentUniqueId: '[FastMigrations.Tests.EditorMode.dll][suite]'
+    - id: 1023
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/[Tests][suite]
       name: Tests
-      fullName: Light_Migrations.Tests
+      fullName: FastMigrations.Tests
       resultStatus: 1
-      duration: 0.2462673
+      duration: 0.2758507
       messages: 
       output: 
       stacktrace: 
@@ -439,30 +439,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1004
-      parentUniqueId: EditorTests.dll/[Light_Migrations][suite]
-    - id: 1006
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/[EditorTests][Light_Migrations.Tests.EditorMode][suite]
+      parentId: 1022
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/[FastMigrations][suite]
+    - id: 1024
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode][suite]
       name: EditorMode
-      fullName: Light_Migrations.Tests.EditorMode
+      fullName: FastMigrations.Tests.EditorMode
       resultStatus: 1
-      duration: 0.2416323
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1005
-      parentUniqueId: EditorTests.dll/Light_Migrations/[Tests][suite]
-    - id: 1001
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-      name: LightMigrationConverterTests
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests
-      resultStatus: 1
-      duration: 0.23574
+      duration: 0.2725788
       messages: 
       output: 
       stacktrace: 
@@ -472,132 +456,29 @@ MonoBehaviour:
       isSuite: 1
       categories: []
       parentId: 1023
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/[EditorTests][Light_Migrations.Tests.EditorMode][suite]
-    - id: 1002
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.EmptyJson_Deserialize_Exception]
-      name: EmptyJson_Deserialize_Exception
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.EmptyJson_Deserialize_Exception
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/[Tests][suite]
+    - id: 1001
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+      name: FastMigrationConverterTests
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests
       resultStatus: 1
-      duration: 0.0998935
+      duration: 0.2671145
       messages: 
       output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1008
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.JsonWithNullValue_Deserialize_Exception]
-      name: JsonWithNullValue_Deserialize_Exception
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.JsonWithNullValue_Deserialize_Exception
-      resultStatus: 1
-      duration: 0.0414421
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1016
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.JsonWithVersion1_DeserializeAsVersion3_Pass]
-      name: JsonWithVersion1_DeserializeAsVersion3_Pass
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.JsonWithVersion1_DeserializeAsVersion3_Pass
-      resultStatus: 1
-      duration: 0.0084559
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1017
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.JsonWithVersion1_DeserializeAsVersion3WithoutMigrator_Exception]
-      name: JsonWithVersion1_DeserializeAsVersion3WithoutMigrator_Exception
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.JsonWithVersion1_DeserializeAsVersion3WithoutMigrator_Exception
-      resultStatus: 1
-      duration: 0.0012246
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1012
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.MigratableObjectsInsideMigratableObject_Deserialize_MigratorCalled]
-      name: MigratableObjectsInsideMigratableObject_Deserialize_MigratorCalled
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.MigratableObjectsInsideMigratableObject_Deserialize_MigratorCalled
-      resultStatus: 1
-      duration: 0.0012584
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1013
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.PersonInArray_Deserialize_MigratorCalled]
-      name: PersonInArray_Deserialize_MigratorCalled
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.PersonInArray_Deserialize_MigratorCalled
-      resultStatus: 1
-      duration: 0.007408
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1015
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.PersonInDictionary_Deserialize_MigratorCalled]
-      name: PersonInDictionary_Deserialize_MigratorCalled
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.PersonInDictionary_Deserialize_MigratorCalled
-      resultStatus: 1
-      duration: 0.0062116
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
+      isSuite: 1
+      categories: []
+      parentId: 1024
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode][suite]
     - id: 1014
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.PersonInList_Deserialize_MigratorCalled]
-      name: PersonInList_Deserialize_MigratorCalled
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.PersonInList_Deserialize_MigratorCalled
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.Array_Deserialize_MigratorCalled]
+      name: Array_Deserialize_MigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.Array_Deserialize_MigratorCalled
       resultStatus: 1
-      duration: 0.0032138
+      duration: 0.1402154
       messages: 
       output: 
       stacktrace: 
@@ -608,13 +489,13 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1007
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserealizeWithOtherMigrator_Pass]
-      name: ValidJsonV1_DeserealizeWithOtherMigrator_Pass
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserealizeWithOtherMigrator_Pass
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1016
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.Dictionary_Deserialize_MigratorCalled]
+      name: Dictionary_Deserialize_MigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.Dictionary_Deserialize_MigratorCalled
       resultStatus: 1
-      duration: 0.0139231
+      duration: 0.010548
       messages: 
       output: 
       stacktrace: 
@@ -625,13 +506,30 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1002
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.EmptyJson_Deserialize_DoesNotThrow]
+      name: EmptyJson_Deserialize_DoesNotThrow
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.EmptyJson_Deserialize_DoesNotThrow
+      resultStatus: 1
+      duration: 0.0028712
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
     - id: 1004
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_Deserialize_MigratorCalled]
-      name: ValidJsonV1_Deserialize_MigratorCalled
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_Deserialize_MigratorCalled
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV0_DeserializeV0_Pass]
+      name: JsonV0_DeserializeV0_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV0_DeserializeV0_Pass
       resultStatus: 1
-      duration: 0.0006063
+      duration: 0.0037597
       messages: 
       output: 
       stacktrace: 
@@ -642,98 +540,13 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1010
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializeAsV2WithIgnoreMigrationMethod_Pass]
-      name: ValidJsonV1_DeserializeAsV2WithIgnoreMigrationMethod_Pass
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializeAsV2WithIgnoreMigrationMethod_Pass
-      resultStatus: 1
-      duration: 0.001944
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1009
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializeAsV2WithoutMigrationMethod_ThrowMigrationException]
-      name: ValidJsonV1_DeserializeAsV2WithoutMigrationMethod_ThrowMigrationException
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializeAsV2WithoutMigrationMethod_ThrowMigrationException
-      resultStatus: 1
-      duration: 0.0009511
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1005
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled]
-      name: ValidJsonV1_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled
-      resultStatus: 1
-      duration: 0.0059328
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1003
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializeStruct_Pass]
-      name: ValidJsonV1_DeserializeStruct_Pass
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_DeserializeStruct_Pass
-      resultStatus: 1
-      duration: 0.0024906
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    - id: 1006
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_MoreThenOneConverted_Pass]
-      name: ValidJsonV1_MoreThenOneConverted_Pass
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_MoreThenOneConverted_Pass
-      resultStatus: 1
-      duration: 0.001719
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
     - id: 1018
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_PopulateWithMigrator_Pass]
-      name: ValidJsonV1_PopulateWithMigrator_Pass
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonV1_PopulateWithMigrator_Pass
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV1_DeserializeAsVersion2_Pass]
+      name: JsonV1_DeserializeAsVersion2_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV1_DeserializeAsVersion2_Pass
       resultStatus: 1
-      duration: 0.0018667
+      duration: 0.0058815
       messages: 
       output: 
       stacktrace: 
@@ -744,13 +557,64 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1005
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV1_DeserializeStruct_Pass]
+      name: JsonV1_DeserializeStruct_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV1_DeserializeStruct_Pass
+      resultStatus: 1
+      duration: 0.0036369
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1006
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV1_DeserializeV1_NotCallMigrate]
+      name: JsonV1_DeserializeV1_NotCallMigrate
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonV1_DeserializeV1_NotCallMigrate
+      resultStatus: 1
+      duration: 0.0013194
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1012
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWith2MigratableObject_Deserialize_MigratorCalled]
+      name: JsonWith2MigratableObject_Deserialize_MigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWith2MigratableObject_Deserialize_MigratorCalled
+      resultStatus: 1
+      duration: 0.0069894
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
     - id: 1011
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonWith2MigratableObject_Deserialize_MigratorCalled]
-      name: ValidJsonWith2MigratableObject_Deserialize_MigratorCalled
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.ValidJsonWith2MigratableObject_Deserialize_MigratorCalled
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeAsV1WithIgnore_Pass]
+      name: JsonWithoutVersion_DeserializeAsV1WithIgnore_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeAsV1WithIgnore_Pass
       resultStatus: 1
-      duration: 0.0010491
+      duration: 0.0020207
       messages: 
       output: 
       stacktrace: 
@@ -761,13 +625,217 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1017
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeAsVersion2_Pass]
+      name: JsonWithoutVersion_DeserializeAsVersion2_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeAsVersion2_Pass
+      resultStatus: 1
+      duration: 0.000853
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1008
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled]
+      name: JsonWithoutVersion_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializePersonWithJsonCtor_CtorCalledMigratorCalled
+      resultStatus: 1
+      duration: 0.0118109
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1003
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeV0_DoesNotThrow]
+      name: JsonWithoutVersion_DeserializeV0_DoesNotThrow
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeV0_DoesNotThrow
+      resultStatus: 1
+      duration: 0.0007893
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1007
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeV1_MigratorCalled]
+      name: JsonWithoutVersion_DeserializeV1_MigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeV1_MigratorCalled
+      resultStatus: 1
+      duration: 0.0007671
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1010
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeV1WithoutMigrationMethod_ThrowMigrationException]
+      name: JsonWithoutVersion_DeserializeV1WithoutMigrationMethod_ThrowMigrationException
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeV1WithoutMigrationMethod_ThrowMigrationException
+      resultStatus: 1
+      duration: 0.0034806
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1009
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeWithOtherMigrator_Pass]
+      name: JsonWithoutVersion_DeserializeWithOtherMigrator_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithoutVersion_DeserializeWithOtherMigrator_Pass
+      resultStatus: 1
+      duration: 0.0085664
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1016
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithRefs_DeserializeWith_PreserveReferencesHandlingAll_Pass]
+      name: JsonWithRefs_DeserializeWith_PreserveReferencesHandlingAll_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithRefs_DeserializeWith_PreserveReferencesHandlingAll_Pass
+      resultStatus: 1
+      duration: 0.0126279
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1017
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithRefs_DeserializeWith_PreserveReferencesHandlingObjects_Pass]
+      name: JsonWithRefs_DeserializeWith_PreserveReferencesHandlingObjects_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.JsonWithRefs_DeserializeWith_PreserveReferencesHandlingObjects_Pass
+      resultStatus: 1
+      duration: 0.0009997
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1015
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.List_Deserialize_MigratorCalled]
+      name: List_Deserialize_MigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.List_Deserialize_MigratorCalled
+      resultStatus: 1
+      duration: 0.0031574
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1013
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.MigratableObjectsInsideMigratableObject_Deserialize_MigratorCalled]
+      name: MigratableObjectsInsideMigratableObject_Deserialize_MigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.MigratableObjectsInsideMigratableObject_Deserialize_MigratorCalled
+      resultStatus: 1
+      duration: 0.0023916
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1014
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.MigratableParentWithMigratableChild_Deserialize_MigratorCalled]
+      name: MigratableParentWithMigratableChild_Deserialize_MigratorCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.MigratableParentWithMigratableChild_Deserialize_MigratorCalled
+      resultStatus: 1
+      duration: 0.0016731
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1015
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.NestedJson_Deserialize_Pass]
+      name: NestedJson_Deserialize_Pass
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.NestedJson_Deserialize_Pass
+      resultStatus: 1
+      duration: 0.0017858
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
     - id: 1019
-      uniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/LightMigrationConverterTests/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.WriteJson]
-      name: WriteJson
-      fullName: Light_Migrations.Tests.EditorMode.LightMigrationConverterTests.WriteJson
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.TwoPersonsWithoutVersion_Populate_MigrationsCalled]
+      name: TwoPersonsWithoutVersion_Populate_MigrationsCalled
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.TwoPersonsWithoutVersion_Populate_MigrationsCalled
       resultStatus: 1
-      duration: 0.0171076
+      duration: 0.0015602
       messages: 
       output: 
       stacktrace: 
@@ -778,14 +846,31 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1001
-      parentUniqueId: EditorTests.dll/Light_Migrations/Tests/EditorMode/[EditorTests][Light_Migrations.Tests.EditorMode.LightMigrationConverterTests][suite]
-    m_ResultText: ValidJsonV1_PopulateWithoutReplaceMigrator_Pass (0,002s)
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    - id: 1020
+      uniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/FastMigrationConverterTests/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests.WriteJson]
+      name: WriteJson
+      fullName: FastMigrations.Tests.EditorMode.FastMigrationConverterTests.WriteJson
+      resultStatus: 1
+      duration: 0.0168755
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: FastMigrations.Tests.EditorMode.dll/FastMigrations/Tests/EditorMode/[FastMigrations.Tests.EditorMode][FastMigrations.Tests.EditorMode.FastMigrationConverterTests][suite]
+    m_ResultText: JsonV1_DeserializeStruct_Pass (0,004s)
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 88ef4ccc
-      m_LastClickedID: -867373176
-      m_ExpandedIDs: 859d1a94baccc8a40bad9ab5ddd196b6be413a112b1acf432758f367ffffff7f
+      m_SelectedIDs: 639483b2
+      m_LastClickedID: -1299999645
+      m_ExpandedIDs: 859d1a94baccc8a41869afb40bad9ab5ddd196b69e8e23f441241c05be413a110b0d022aee13be3f2b1acf432758f367ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -916,9 +1001,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: e0f9ffff
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 10fbffff
+      m_ExpandedIDs: eef8ffffa0f9ffffecfaffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1044,7 +1129,7 @@ MonoBehaviour:
   m_StartGridSize: 64
   m_LastFolders: []
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: F:\Projects\Rider\FastMigrations.Json.Net\Light-Migrations.Unity
+  m_LastProjectPath: F:\Projects\Rider\FastMigrations.Json.Net\FastMigrations.Unity
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
