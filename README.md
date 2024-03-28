@@ -13,3 +13,7 @@ Provides an efficient way to write json file migrations for `Unity` and `dotnet`
   - Newtonsoft.Json version 12.+
 - Small code size: Few internal types and few .callvirt.
 - Immutable: Thread safety and robustness.
+
+## Important
+Plugin is stable and ready to use, but I'm working on NPM and NuGet distribution.
+You can check [Projects](https://github.com/users/vangogih/projects/2/views/1) to check tasks statuses
