@@ -219,4 +219,31 @@ namespace FastMigrations.Tests.EditorMode
             return jsonObj;
         }
     }
+
+    [Migratable(1)]
+    public class Directory
+    {
+        public string Name { get; set; }
+        public Directory Parent { get; set; }
+        public IList<File> Files { get; set; }
+
+        private static JObject Migrate_1(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(Directory), nameof(Migrate_1));
+            return jsonObj;
+        }
+    }
+
+    [Migratable(1)]
+    public class File
+    {
+        public string Name { get; set; }
+        public Directory Parent { get; set; }
+
+        private static JObject Migrate_1(JObject jsonObj)
+        {
+            MethodCallHandler.RegisterMethodCall(typeof(File), nameof(Migrate_1));
+            return jsonObj;
+        }
+    }
 }

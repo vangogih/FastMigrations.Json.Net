@@ -69,6 +69,11 @@ namespace FastMigrations.Runtime
                 _migrationInProgress.Value!.Add(objectType);
 
                 var jObject = JObject.Load(reader);
+
+                //don't try and repeat migration for objects serialized as refs to previous
+                if (jObject["$ref"] != null)
+                    return serializer.ReferenceResolver?.ResolveReference(serializer, ((string)jObject["$ref"])!);
+
                 int fromVersion = MigratorConstants.DefaultVersion;
 
                 if (jObject.ContainsKey(MigratorConstants.VersionJsonFieldName))
@@ -78,7 +83,8 @@ namespace FastMigrations.Runtime
                 uint toVersion = migratableAttribute.Version;
 
                 if (toVersion + fromVersion != 0 && fromVersion != toVersion)
-                    jObject = RunMigrations(jObject, objectType, fromVersion, toVersion, _methodHandling);
+                    jObject = RunMigrations(jObject, objectType, fromVersion, toVersion,
+                        _methodHandling);
 
                 if (existingValue != null && serializer.ObjectCreationHandling != ObjectCreationHandling.Replace)
                 {
@@ -101,9 +107,11 @@ namespace FastMigrations.Runtime
             return isMigratable && !_migrationInProgress.Value!.Contains(objectType);
         }
 
-        private JObject RunMigrations(JObject jObject, Type objectType, int fromVersion, uint toVersion, MigratorMissingMethodHandling methodHandling)
+        private JObject RunMigrations(JObject jObject, Type objectType, int fromVersion,
+            uint toVersion, MigratorMissingMethodHandling methodHandling)
         {
             fromVersion += MigratorConstants.MinVersionToStartMigration;
+
             for (int currVersion = fromVersion; currVersion <= toVersion; ++currVersion)
             {
                 var migrationMethod = GetMigrateMethod(objectType, currVersion, _migrateMethodsByType);

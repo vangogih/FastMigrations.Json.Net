@@ -6,23 +6,6 @@ using Newtonsoft.Json.Linq;
 
 namespace FastMigrations.Tests.EditorMode
 {
-    public sealed class ReadConverterMock : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) { }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
-        {
-            var obj = JToken.Load(reader);
-            return existingValue;
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType.GetCustomAttribute(typeof(MigratableAttribute)) == null;
-        }
-    }
-
     public sealed class FastMigrationsConverterMock : FastMigrationsConverter
     {
         public int ReadJsonCalledCount;

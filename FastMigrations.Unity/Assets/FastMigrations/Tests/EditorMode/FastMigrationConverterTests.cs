@@ -216,6 +216,99 @@ namespace FastMigrations.Tests.EditorMode
         }
 
         [Test]
+        public void JsonWithRefs_DeserializeWith_PreserveReferencesHandlingAll_Pass()
+        {
+            // from: https://www.newtonsoft.com/json/help/html/preservereferenceshandlingobject.htm
+            var json = @"
+{
+  ""$id"": ""1"",
+  ""Name"": ""My Documents"",
+  ""Parent"": {
+    ""$id"": ""2"",
+    ""Name"": ""Root"",
+    ""Parent"": null,
+    ""Files"": 
+    [
+        {
+            ""$ref"": ""3""
+        }
+    ]
+  },
+  ""Files"": {
+    ""$id"": ""3"",
+    ""$values"": [
+      {
+        ""$id"": ""4"",
+        ""Name"": ""ImportantLegalDocument.docx"",
+        ""Parent"": {
+          ""$ref"": ""1""
+        }
+      },
+      {
+          ""$ref"": ""4""
+      }
+    ]
+  }
+}
+";
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            Directory directory = JsonConvert.DeserializeObject<Directory>(json, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.All, Converters = new List<JsonConverter> { migrator } });
+
+            Assert.NotNull(directory);
+
+            var directoryCallInfo = MethodCallHandler.MethodsCallInfoByType[typeof(Directory)];
+            var fileCallInfo = MethodCallHandler.MethodsCallInfoByType[typeof(File)];
+
+            Assert.AreEqual(1, directoryCallInfo.MethodCallCount);
+            Assert.AreEqual(1, fileCallInfo.MethodCallCount);
+        }
+
+        [Test]
+        public void JsonWithRefs_DeserializeWith_PreserveReferencesHandlingObjects_Pass()
+        {
+            // from: https://www.newtonsoft.com/json/help/html/preservereferenceshandlingobject.htm
+            var json = @"
+{
+  ""$id"": ""1"",
+   ""Name"": ""My Documents"",
+   ""Parent"": {
+     ""$id"": ""2"",
+     ""Name"": ""Root"",
+     ""Parent"": null,
+     ""Files"":
+    [
+        {
+         ""$ref"": ""3""
+        }
+    ]
+   },
+   ""Files"": [
+     {
+       ""$id"": ""3"",
+       ""Name"": ""ImportantLegalDocument.docx"",
+       ""Parent"": {
+         ""$ref"": ""1""
+       }
+     },
+    {
+        ""$ref"": ""3""
+    }
+   ]
+ }
+";
+            var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+            Directory directory = JsonConvert.DeserializeObject<Directory>(json, new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects, Converters = new List<JsonConverter> { migrator } });
+
+            Assert.NotNull(directory);
+
+            var directoryCallInfo = MethodCallHandler.MethodsCallInfoByType[typeof(Directory)];
+            var fileCallInfo = MethodCallHandler.MethodsCallInfoByType[typeof(File)];
+
+            Assert.AreEqual(1, directoryCallInfo.MethodCallCount);
+            Assert.AreEqual(1, fileCallInfo.MethodCallCount);
+        }
+
+        [Test]
         public void Array_Deserialize_MigratorCalled()
         {
             var json = @"
