@@ -48,14 +48,7 @@ jobs:
 
       - name: Upload test result artifacts
         uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: Test results for ${{ matrix.testMode }}
-          path: ${{ steps.unity-test.outputs.artifactsPath }}
-      
-      - name: Upload test coverage results
-        uses: actions/upload-artifact@v3
         if: matrix.unityVersion == '2023.2.15f1'
         with:
-          name: Coverage results for editmode unity version ${{ matrix.unityVersion }}
-          path: ${{ steps.unity-test.outputs.coveragePath }}
+          name: coverage-results
+          path: ${{ steps.unity-test.outputs.artifactsPath }}
