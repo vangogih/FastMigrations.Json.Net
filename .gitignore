@@ -356,6 +356,7 @@ FastMigrations.Unity/[Bb]uild/
 FastMigrations.Unity/[Bb]uilds/
 FastMigrations.Unity/Assets/AssetStoreTools*
 FastMigrations.Unity/ExportedObj/
+FastMigrations.Unity/CodeCoverage/
 FastMigrations.Unity/.consulo/
 FastMigrations.Unity/*.csproj
 FastMigrations.Unity/*.unityproj
