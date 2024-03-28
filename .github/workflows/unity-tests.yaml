@@ -46,9 +46,16 @@ jobs:
           testMode: editmode
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport'
 
-      - name: Upload test result artifacts
+      - name: Upload test result artifacts  
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results-${{ matrix.unityVersion }}
+          path: ${{ steps.tests.outputs.artifactsPath }}
+      
+      - name: Upload coverage result artifacts
         uses: actions/upload-artifact@v3
         if: matrix.unityVersion == '2023.2.15f1'
         with:
           name: coverage-results
-          path: ${{ steps.unity-test.outputs.artifactsPath }}
+          path: ${{ steps.unity-test.outputs.coveragePath }}
