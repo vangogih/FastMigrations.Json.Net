@@ -14,10 +14,10 @@ jobs:
     strategy:
       matrix:
         unityVersion:
-          - 2019.4.40f1
-          - 2020.3.48f1
-          - 2021.3.36f1
-          - 2022.3.22f1
+          #- 2019.4.40f1
+          #- 2020.3.48f1
+          #- 2021.3.36f1
+          #- 2022.3.22f1
           - 2023.2.15f1
     steps:
       - name: Checkout
@@ -43,6 +43,8 @@ jobs:
           projectPath: ./FastMigrations.Unity
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          testMode: editmode
+          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport'
 
       - name: Upload test result artifacts
         uses: actions/upload-artifact@v3
@@ -53,7 +55,7 @@ jobs:
       
       - name: Upload test coverage results
         uses: actions/upload-artifact@v3
-        if: always()
+        if: matrix.unityVersion == '2023.2.15f1'
         with:
-          name: Coverage results for ${{ matrix.testMode }}
+          name: Coverage results for editmode unity version ${{ matrix.unityVersion }}
           path: ${{ steps.unity-test.outputs.coveragePath }}
