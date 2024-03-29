@@ -1,8 +1,7 @@
 ﻿name: dotnet-tests
 
 on:
-  workflow_dispatch:
-    branches: ["github_actions"]
+  workflow_dispatch
 #  push:
 #    branches:
 #      - "github_actions"

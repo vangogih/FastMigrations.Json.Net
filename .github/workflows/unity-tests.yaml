@@ -1,8 +1,7 @@
 ﻿name: unity-tests
 
 on:
-  workflow_dispatch:
-    branches: ["github_actions"]
+  workflow_dispatch
 #  push:
 #    branches:
 #      - "github_actions"
@@ -47,7 +46,7 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: editmode
-          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport'
+          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+FastMigrations.Runtime.*'
 
       - name: Upload test result artifacts  
         uses: actions/upload-artifact@v3
