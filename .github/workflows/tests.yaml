@@ -59,51 +59,51 @@ jobs:
           testMode: editmode
           coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+FastMigrations.Runtime.*'
 
-      - name: Upload test result artifacts  
+      - name: Upload test result artifacts
         uses: actions/upload-artifact@v3
         if: always()
         with:
           name: test-results-${{ matrix.unityVersion }}
           path: ${{ steps.unity-test.outputs.artifactsPath }}
-      
+
       - name: Upload coverage result artifacts
         uses: actions/upload-artifact@v3
         if: matrix.unityVersion == '2023.2.15f1'
         with:
           name: coverage-results
           path: ${{ steps.unity-test.outputs.coveragePath }}
-          
-    pages-deploy:
-      needs: [test-unity]
-      permissions:
-        contents: read
-        pages: write
-        id-token: write
-      concurrency:
-        group: "pages"
-        cancel-in-progress: false
-      environment:
-        name: github-pages
-        url: ${{ steps.deployment.outputs.page_url }}
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v4
+  
+  pages-deploy:
+    needs: [ test-unity ]
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-        - name: Setup Pages
-          uses: actions/configure-pages@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-        - name: Download artifact
-          id: download-artifact
-          uses: dawidd6/action-download-artifact@v3
-          with:
-            workflow: unity-tests.yaml
+      - name: Download artifact
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: unity-tests.yaml
 
-        - name: Upload artifact
-          uses: actions/upload-pages-artifact@v3
-          with:
-            path: ./coverage-results/Report
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./coverage-results/Report
 
-        - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
