@@ -1,9 +1,10 @@
 ﻿# Simple workflow for deploying static content to GitHub Pages
-name: pages deploy
+name: pages-deploy
 
 on:
   workflow_run:
-    workflows: [dotnet-tests, unity-tests]
+    workflows: 
+      - unity-tests
     types:
       - completed
 
