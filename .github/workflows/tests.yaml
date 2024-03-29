@@ -104,9 +104,8 @@ jobs:
               "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts"
 
       - name: Download tests coverage results
-        uses: dawidd6/action-download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          run_id: ${{ github.event.workflow_run.id }}
           name: coverage-results
 
       - name: Upload artifact
