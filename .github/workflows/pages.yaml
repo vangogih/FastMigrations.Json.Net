@@ -3,9 +3,10 @@ name: Deploy static content to Pages
 
 on:
   workflow_dispatch:
-  # Runs on pushes targeting the default branch
-  push:
     branches: ["github_actions"]
+  # Runs on pushes targeting the default branch
+#  push:
+#    branches: ["github_actions"]
 
   # Allows you to run this workflow manually from the Actions tab
 

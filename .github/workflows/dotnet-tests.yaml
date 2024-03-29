@@ -2,6 +2,7 @@
 
 on:
   workflow_dispatch:
+    branches: ["github_actions"]
 #  push:
 #    branches:
 #      - "github_actions"
