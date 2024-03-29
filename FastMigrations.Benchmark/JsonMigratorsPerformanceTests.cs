@@ -66,7 +66,7 @@ namespace FastMigrations.Benchmark
         private JsonSerializerSettings _fastSettings;
         private JsonSerializerSettings _weingartnerSettings;
 
-        [IterationSetup]
+        [GlobalSetup]
         public void Setup()
         {
             _baseSettings = new JsonSerializerSettings();

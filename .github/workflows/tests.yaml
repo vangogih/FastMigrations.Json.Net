@@ -95,13 +95,11 @@ jobs:
 
       - name: Download tests coverage results
         uses: actions/download-artifact@v4
-        with:
-          name: coverage-results
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./coverage-results/Report
+          path: ./FastMigrations.Unity/CodeCoverage/Report
 
       - name: Deploy to GitHub Pages
         id: deployment
