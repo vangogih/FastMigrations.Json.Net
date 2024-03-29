@@ -99,7 +99,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./FastMigrations.Unity/CodeCoverage/Report
+          path: ./coverage-results/Report
 
       - name: Deploy to GitHub Pages
         id: deployment
