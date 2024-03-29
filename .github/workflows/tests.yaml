@@ -93,11 +93,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
-      - name: Download artifact
-        id: download-artifact
-        uses: dawidd6/action-download-artifact@v3
+      - name: Download tests coverage results
+        uses: actions/download-artifact@v4
         with:
-          workflow: unity-tests.yaml
+          name: coverage-results
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
