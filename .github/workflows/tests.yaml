@@ -57,7 +57,7 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: editmode
-          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:+FastMigrations.Runtime.*'
+          coverageOptions: 'generateAdditionalMetrics;generateHtmlReport;generateBadgeReport;assemblyFilters:FastMigrations.Runtime.*'
 
       - name: Upload test result artifacts
         uses: actions/upload-artifact@v3
@@ -73,7 +73,7 @@ jobs:
           name: coverage-results
           path: ${{ steps.unity-test.outputs.coveragePath }}
   
-  pages-deploy:
+  coverage-results-deploy:
     needs: [ test-unity ]
     permissions:
       contents: read
