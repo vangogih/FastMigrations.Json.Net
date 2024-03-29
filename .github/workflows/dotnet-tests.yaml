@@ -1,13 +1,12 @@
 ﻿name: dotnet-tests
 
 on:
-  workflow_dispatch
-#  push:
-#    branches:
-#      - "github_actions"
-#  pull_request:
-#    branches:
-#      - "github_actions"
+  push:
+    branches:
+      - "github_actions"
+  pull_request:
+    branches:
+      - "github_actions"
 
 jobs:
   test-dotnet:
