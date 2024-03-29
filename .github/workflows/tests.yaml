@@ -67,7 +67,7 @@ jobs:
           path: ${{ steps.unity-test.outputs.artifactsPath }}
 
       - name: Upload coverage result artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: matrix.unityVersion == '2023.2.15f1'
         with:
           name: coverage-results
