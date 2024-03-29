@@ -1,4 +1,4 @@
-﻿name: unity-tests
+﻿name: tests
 
 on:
   push:
@@ -8,8 +8,20 @@ on:
     branches:
       - "github_actions"
 
-
 jobs:
+  test-dotnet:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      NUGET_XMLDOC_MODE: skip
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 5.0.x
+      - run: dotnet test -c Debug ./FastMigrations.StandaloneTests
+  
   test-unity:
     runs-on: ubuntu-latest
     strategy:
@@ -60,3 +72,38 @@ jobs:
         with:
           name: coverage-results
           path: ${{ steps.unity-test.outputs.coveragePath }}
+          
+    pages-deploy:
+      needs: [test-unity]
+      permissions:
+        contents: read
+        pages: write
+        id-token: write
+      concurrency:
+        group: "pages"
+        cancel-in-progress: false
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+
+        - name: Setup Pages
+          uses: actions/configure-pages@v4
+
+        - name: Download artifact
+          id: download-artifact
+          uses: dawidd6/action-download-artifact@v3
+          with:
+            workflow: unity-tests.yaml
+
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v3
+          with:
+            path: ./coverage-results/Report
+
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
