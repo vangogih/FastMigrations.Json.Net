@@ -92,10 +92,20 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        
+      - name: List Artifacts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
+        run: |
+            curl \
+              -H "Authorization: token ${GITHUB_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts"
 
       - name: Download tests coverage results
         uses: dawidd6/action-download-artifact@v3
         with:
+          run_id: ${{ github.event.workflow_run.id }}
           name: coverage-results
 
       - name: Upload artifact
