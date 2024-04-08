@@ -112,7 +112,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./coverage-results/Report
+          path: ./coverage-results/Report/${GITHUB_REF##*/}
 
       - name: Deploy to GitHub Pages
         id: deployment
