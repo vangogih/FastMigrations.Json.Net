@@ -3,10 +3,10 @@
 on:
   push:
     branches:
-      - "github_actions"
+      - "master"
   pull_request:
     branches:
-      - "github_actions"
+      - "master"
 
 jobs:
   test-dotnet:
@@ -27,10 +27,10 @@ jobs:
     strategy:
       matrix:
         unityVersion:
-          #- 2019.4.40f1
-          #- 2020.3.48f1
-          #- 2021.3.36f1
-          #- 2022.3.22f1
+          - 2019.4.40f1
+          - 2020.3.48f1
+          - 2021.3.36f1
+          - 2022.3.22f1
           - 2023.2.15f1
     steps:
       - name: Checkout
@@ -112,7 +112,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./coverage-results/Report/${GITHUB_REF##*/}
+          path: ./coverage-results/Report
 
       - name: Deploy to GitHub Pages
         id: deployment
