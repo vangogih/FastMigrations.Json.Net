@@ -435,9 +435,9 @@ namespace FastMigrations.Tests.EditorMode
             var jsonV1 = JsonConvert.SerializeObject(personV1, migrator);
             var jsonV2 = JsonConvert.SerializeObject(personV2, migrator);
 
-            Assert.IsTrue(jsonV0.Contains(@"""JsonVersion"":0"));
-            Assert.IsTrue(jsonV1.Contains(@"""JsonVersion"":1"));
-            Assert.IsTrue(jsonV2.Contains(@"""JsonVersion"":2"));
+            Assert.IsFalse(jsonV0.Contains($@"""{MigratorConstants.VersionJsonFieldName}"":0"));
+            Assert.IsTrue(jsonV1.Contains($@"""{MigratorConstants.VersionJsonFieldName}"":1"));
+            Assert.IsTrue(jsonV2.Contains($@"""{MigratorConstants.VersionJsonFieldName}"":2"));
         }
 
         [TearDown]
