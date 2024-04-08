@@ -2,7 +2,7 @@
 
 # FastMigrations.Json.Net
 
-[![tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/tests.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/tests.yaml)
+[![tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/release.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/release.yaml)
 [![](https://vangogih.github.io/FastMigrations.Json.Net/badge_linecoverage.svg)](https://vangogih.github.io/FastMigrations.Json.Net/)
 
 Provides an efficient way to write json file migrations for `Unity` and `dotnet`
