@@ -91,7 +91,7 @@ namespace FastMigrations.Tests.EditorMode
             jsonObj.Add("fullName", nameToken);
 
             JToken ageToken = jsonObj["age"];
-            jsonObj.Add("birthYear", DateTime.Today.Year - ageToken.ToObject<int>());
+            jsonObj.Add("birthYear", 2024 - ageToken.ToObject<int>());
             jsonObj.Remove("age");
 
             var oldNameSplit = nameToken.ToObject<string>().Split(' ');

@@ -10,12 +10,52 @@ namespace FastMigrations.Runtime
 {
     public enum MigratorMissingMethodHandling
     {
+        /// <summary>Throws <see cref="MigrationException"/> if "Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)" method doesn't exist on deserializable object</summary>
         ThrowException,
+        /// <summary>Skips migration if "Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)" method doesn't exist on deserializable object</summary>
         Ignore
     }
 
     internal delegate JObject MigrateMethod(JObject data);
 
+    /// <summary>
+    /// Thread safe JsonConverter who calls "Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)" methods on objects marked with attribute <see cref="MigratableAttribute"/> on deserialization.
+    ///
+    /// All methods must have signature "private/protected static JObject Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)".
+    ///
+    /// All methods will be called from current version to target version (inclusive).
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// By default all classes have <see cref="MigratableAttribute.Version"/> 0.
+    /// You can mark all potentially migratable objects with <see cref="MigratableAttribute"/>.
+    /// </remarks>
+    ///
+    /// <example>
+    /// Methods you have to implement in your class:
+    /// <code>
+    /// [Migratable(1)]
+    /// public class YouObjectType
+    /// {
+    ///    private static JObject Migrate_1(JObject data)
+    ///    // OR
+    ///    protected static JObject Migrate_1(JObject data)
+    ///    // !public modifier is not allowed!
+    /// }
+    /// </code>
+    /// How to add migrator to JsonConverter:
+    /// <code>
+    /// var migrator = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException);
+    /// var person = JsonConvert.DeserializeObject&lt;YouObjectType&gt;(json, migrator);
+    /// // OR
+    /// JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+    /// {
+    ///     Converters = new List&lt;JsonConverter&gt; { new FastMigrationsConverter(MigratorMissingMethodHandling.ThrowException) }
+    /// };
+    /// </code>
+    /// </example>
+    ///
+    /// <exception cref="MigrationException">"Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)" method doesn't exist on deserializable object</exception>
     public class FastMigrationsConverter : JsonConverter
     {
         public override bool CanRead => true;
@@ -27,6 +67,8 @@ namespace FastMigrations.Runtime
         private readonly IDictionary<Type, MigratableAttribute> _attributeByTypeCache;
         private readonly IDictionary<Type, IDictionary<int, MigrateMethod>> _migrateMethodsByType;
 
+        /// <param name="methodHandling">Variant of handling missing "Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)" method</param>
+        /// <seealso cref="MigratorMissingMethodHandling"/>
         public FastMigrationsConverter(MigratorMissingMethodHandling methodHandling)
         {
             _migrationInProgress = new ThreadLocal<HashSet<Type>>(() => new HashSet<Type>());
@@ -34,6 +76,19 @@ namespace FastMigrations.Runtime
             _migrateMethodsByType = new ConcurrentDictionary<Type, IDictionary<int, MigrateMethod>>();
 
             _methodHandling = methodHandling;
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            MigratableAttribute attribute = GetMigratableAttribute(objectType, _attributeByTypeCache);
+
+            if (attribute == null)
+                return false;
+
+            if (attribute.Version == MigratorConstants.DefaultVersion)
+                return false;
+
+            return !_migrationInProgress.Value.Contains(objectType);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -90,8 +145,7 @@ namespace FastMigrations.Runtime
                 {
                     using (JsonReader jObjReader = jObject.CreateReader())
                     {
-
-                        serializer.Populate(jObjReader, existingValue); 
+                        serializer.Populate(jObjReader, existingValue);
                         return existingValue;
                     }
                 }
@@ -102,12 +156,6 @@ namespace FastMigrations.Runtime
             {
                 _migrationInProgress.Value.Remove(objectType);
             }
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            bool isMigratable = GetMigratableAttribute(objectType, _attributeByTypeCache) != null;
-            return isMigratable && !_migrationInProgress.Value.Contains(objectType);
         }
 
         private JObject RunMigrations(JObject jObject, Type objectType, int fromVersion,
@@ -145,7 +193,7 @@ namespace FastMigrations.Runtime
             if (cache.TryGetValue(objectType, out MigratableAttribute attribute))
                 return attribute;
 
-            attribute = (MigratableAttribute)objectType.GetCustomAttribute(typeof(MigratableAttribute), true);
+            attribute = (MigratableAttribute)objectType.GetCustomAttribute(typeof(MigratableAttribute), false);
             cache[objectType] = attribute;
             return attribute;
         }
@@ -171,11 +219,5 @@ namespace FastMigrations.Runtime
             methodsByVersion[version] = newMethodDelegate;
             return newMethodDelegate;
         }
-    }
-
-    public sealed class MigrationException : Exception
-    {
-        public MigrationException(string message)
-            : base(message) { }
     }
 }
