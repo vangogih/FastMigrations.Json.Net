@@ -1,8 +1,9 @@
 {
   "dependencies": {
     "com.unity.ide.rider": "3.0.24",
+    "com.unity.nuget.newtonsoft-json": "2.0.2",
     "com.unity.test-framework": "1.1.33",
-	"com.unity.nuget.newtonsoft-json": "3.2.1"
+    "com.unity.testtools.codecoverage": "1.2.5"
   },
   "scopedRegistries": [
     {
