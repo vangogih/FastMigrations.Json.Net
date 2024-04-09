@@ -13,7 +13,7 @@ jobs:
     uses: ./.github/workflows/pull-request-check.yaml
   
   coverage-results-deploy:
-    needs: [ test-unity ]
+    needs: [ pull-request-check ]
     permissions:
       contents: read
       pages: write
