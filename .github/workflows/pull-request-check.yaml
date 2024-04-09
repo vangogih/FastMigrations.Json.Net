@@ -1,10 +1,10 @@
 ﻿name: pull-request-check
 
 on:
-#  pull_request:
-#    branches:
-#      - "master"
-        
+  pull_request:
+    branches:
+      - "master"
+
   workflow_call:
 
 jobs:
@@ -63,7 +63,7 @@ jobs:
         with:
           name: test-results-${{ matrix.unityVersion }}
           path: ${{ steps.unity-test.outputs.artifactsPath }}
-          
+
       - name: Upload coverage result artifacts
         uses: actions/upload-artifact@v4
         if: matrix.unityVersion == '2023.2.15f1'
