@@ -11,9 +11,9 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
         <!-- Package information -->
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <PackageId>FastMigrations.Json</PackageId>
-        <Title>FastMigrations.Json</Title>
+        <Title>Vangogih.FastMigration.Json</Title>
         <Product>Fast Migrations Json .NET</Product>
         <Description>The extra fast, minimum code size, unity compatible plugin for data migrations using Newtonsoft Json.Net.</Description>
 
@@ -28,16 +28,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\LICENSE.md" Pack="true" PackagePath="\"/>
-        <None Include="..\FastMigrationIcon.png" Pack="true" PackagePath="\"/>
-        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\LICENSE.md" Pack="true" PackagePath="\" />
+        <None Include="..\FastMigrationIcon.png" Pack="true" PackagePath="\" />
+        <None Include="..\README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="..\FastMigrations.Unity\Assets\FastMigrations\Runtime\**\*.cs"/>
+        <Compile Include="..\FastMigrations.Unity\Assets\FastMigrations\Runtime\**\*.cs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
 </Project>
