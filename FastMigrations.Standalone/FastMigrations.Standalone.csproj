@@ -3,12 +3,42 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>FastMigrations.Runtime</RootNamespace>
+
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+        <!-- Package information -->
+        <Version>1.0.0</Version>
+        <PackageId>FastMigrations.Json</PackageId>
+        <Title>FastMigrations.Json</Title>
+        <Product>Fast Migrations Json .NET</Product>
+        <Description>The extra fast, minimum code size, unity compatible plugin for data migrations using Newtonsoft Json.Net.</Description>
+
+        <PackageTags>json, migration</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageIcon>FastMigrationIcon.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/vangogih/FastMigrations.Json.Net</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/vangogih/FastMigrations.Json.Net/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/vangogih/FastMigrations.Json.Net</RepositoryUrl>
+
+        <Authors>Aleksei Kozorezov aka @vangogih</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
+
     <ItemGroup>
-        <Compile Include="..\FastMigrations.Unity\Assets\FastMigrations\Runtime\**\*.cs" />
+        <None Include="..\LICENSE" Pack="true" PackagePath="LICENSE.md"/>
+        <None Include="..\FastMigrationIcon.png" Pack="true" PackagePath="\"/>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="..\FastMigrations.Unity\Assets\FastMigrations\Runtime\**\*.cs"/>
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     </ItemGroup>
 
 </Project>
