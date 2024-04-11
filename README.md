@@ -48,6 +48,8 @@ Compatible with `.NET Standard 2.0`. Full compatibility matrix you will find [he
 
 *Requires Unity 2019.4+*
 
+*[Newtonsoft Json Unity Package 2.0.2](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@2.0/manual/index.html)*
+
 #### Install via UPM (using Git URL)
 
 1. Navigate to your project's Packages folder and open the manifest.json file.
@@ -70,3 +72,33 @@ Compatible with `.NET Standard 2.0`. Full compatibility matrix you will find [he
 
 1. Download the .unitypackage from [releases](https://github.com/vangogih/FastMigrations.Json.Net/releases) page.
 2. Open FastMigrations.Json.Net.x.x.x.unitypackage
+
+
+## TL;DR
+
+Let's imagine you have a beautiful game released in Google Play or AppStore. In the game you save data in format:
+```json
+{
+  "softCurrency" : 100,
+  "hardCurrency" : 10
+}
+```
+In C# it will look like:
+```csharp
+public class PlayerData
+{
+    public int softCurrency;
+    public int hardCurrency;
+}
+```
+And with the next release game designers come to you and ask to add new types of currencies into the game. And you decide to change 
+the structure of `PlayerData` and aggregate all currencies as Dictionary.
+```csharp
+public class PlayerData
+{
+    public Dictionary<Currency, int> wallet;
+}
+```
+And now you 2 problems:
+1. All current users will lose their progress
+2. Possible 
