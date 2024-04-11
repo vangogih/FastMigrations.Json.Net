@@ -25,6 +25,48 @@ Provides an efficient way to write json file migrations for `Unity` and `dotnet`
 - Small code size: Few internal types and few .callvirt.
 - Immutable: Thread safety and robustness.
 
-## Important
-Plugin is stable and ready to use, but I'm working on NPM and NuGet distribution.
-You can check [Projects](https://github.com/users/vangogih/projects/2/views/1) to check tasks statuses
+## Installation
+
+### .NET
+Compatible with `.NET Standard 2.0`. Full compatibility matrix you will find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframeworks-body-tab)
+
+#### Install via .NET CLI
+- ```csharp
+  dotnet add package FastMigrations.Json --version 1.0.2
+  ```
+
+#### Install manually with .csproj
+1. Open project where you want to add this plugin
+2. Add this line under `ItemGroup`
+- ```csharp
+  <ItemGroup>
+    <PackageReference Include="FastMigrations.Json" Version="1.0.2" />
+  </ItemGroup>
+  ```
+
+### Unity
+
+*Requires Unity 2019.4+*
+
+#### Install via UPM (using Git URL)
+
+1. Navigate to your project's Packages folder and open the manifest.json file.
+2. Add this line below the "dependencies":
+- ```json title="Packages/manifest.json"
+    "io.vangogih.fastmigrations": "https://github.com/vangogih/FastMigrations.Json.Net.git?path=FastMigrations.Unity/Assets/FastMigrations#1.0.2",
+  ```
+3. UPM should now install the package.
+
+#### Install via OpenUPM
+
+
+1. The package is available on the [openupm registry](https://openupm.com/packages/io.vangogih.fastmigrations/). It's recommended to install it via [openupm-cli](https://github.com/openupm/openupm-cli).
+2. Execute the openum command.
+  - ```
+      openupm add io.vangogih.fastmigrations
+    ```
+
+#### Install manually (using .unitypackage)
+
+1. Download the .unitypackage from [releases](https://github.com/vangogih/FastMigrations.Json.Net/releases) page.
+2. Open FastMigrations.Json.Net.x.x.x.unitypackage
