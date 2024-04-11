@@ -1,12 +1,15 @@
-﻿{
-  "name": "vangogih.fastmigrations.json",
+{
+  "name": "io.vangogih.fastmigrations",
   "displayName": "Fast Migrations",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "unity": "2019.4",
   "description": "The extra fast, minimum code size, unity compatible plugin for data migrations using Newtonsoft Json.Net.",
   "keywords": ["unity", "dotnet", "json", "migration", "json migration"],
   "license": "MIT",
   "documentationUrl": "https://github.com/vangogih/FastMigrations.Json.Net/tree/master",
   "changelogUrl": "https://github.com/vangogih/FastMigrations.Json.Net/releases",
-  "licensesUrl": "https://github.com/vangogih/FastMigrations.Json.Net/blob/master/LICENSE"
+  "licensesUrl": "https://github.com/vangogih/FastMigrations.Json.Net/blob/master/LICENSE",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.2"
+  }
 }

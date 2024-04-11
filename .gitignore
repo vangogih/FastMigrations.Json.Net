@@ -349,6 +349,7 @@ MigrationBackup/
 # End of https://www.toptal.com/developers/gitignore/api/csharp
 
 ### Unity ###
+/*.unitypackage
 FastMigrations.Unity/[Ll]ibrary/
 FastMigrations.Unity/[Tt]emp/
 FastMigrations.Unity/[Oo]bj/
