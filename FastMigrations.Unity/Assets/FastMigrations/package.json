@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "vangogih.fastmigrations.json",
   "displayName": "Fast Migrations",
   "version": "1.0.0",
@@ -9,4 +9,7 @@
   "documentationUrl": "https://github.com/vangogih/FastMigrations.Json.Net/tree/master",
   "changelogUrl": "https://github.com/vangogih/FastMigrations.Json.Net/releases",
   "licensesUrl": "https://github.com/vangogih/FastMigrations.Json.Net/blob/master/LICENSE"
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "2.0.2"
+  }
 }
