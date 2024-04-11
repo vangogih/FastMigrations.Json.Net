@@ -8,6 +8,10 @@ using Newtonsoft.Json.Linq;
 
 namespace FastMigrations.Runtime
 {
+    /// <summary>
+    /// Variant of handling missing "Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)" method
+    /// </summary>
+    /// <seealso cref="MigratorMissingMethodHandling"/>
     public enum MigratorMissingMethodHandling
     {
         /// <summary>Throws <see cref="MigrationException"/> if "Migrate_<see cref="MigratableAttribute.Version"/>(JObject data)" method doesn't exist on deserializable object</summary>

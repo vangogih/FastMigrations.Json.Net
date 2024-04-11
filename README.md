@@ -1,11 +1,20 @@
-<img alt="logo" src="https://github.com/vangogih/FastMigrations.Json.Net/assets/30757221/e5041259-3b11-4364-aeae-657b2551f3e8" height="128px" />
+<h1 align="center">
+<img alt="logo" src="./FastMigrationIcon.png" height="200px" />
+<br/>
+FastMigrations.Json.Net
+</h1>
 
-# FastMigrations.Json.Net
+<div align="center">
+
+![](https://img.shields.io/badge/unity-2019.4+-000.svg)
+[![NuGet Version](https://img.shields.io/nuget/v/FastMigrations.Json)](https://www.nuget.org/packages/FastMigrations.Json)
 
 [![tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/release.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/release.yaml)
 [![](https://vangogih.github.io/FastMigrations.Json.Net/badge_linecoverage.svg)](https://vangogih.github.io/FastMigrations.Json.Net/)
 
-Provides an efficient way to write json file migrations for `Unity` and `dotnet`
+</div>
+
+Provides an efficient way to write json file migrations for `Unity` and `dotnet`:
 
 - At least 5-10x times faster then [Migrations.Json.Net](https://github.com/Weingartner/Migrations.Json.Net/tree/master). See Benchmarks
 - Compatible with:
