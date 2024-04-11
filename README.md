@@ -8,6 +8,7 @@ FastMigrations.Json.Net
 
 ![](https://img.shields.io/badge/unity-2019.4+-000.svg)
 [![NuGet Version](https://img.shields.io/nuget/v/FastMigrations.Json)](https://www.nuget.org/packages/FastMigrations.Json)
+[![openupm](https://img.shields.io/npm/v/io.vangogih.fastmigrations?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/io.vangogih.fastmigrations/)
 
 [![tests](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/release.yaml/badge.svg)](https://github.com/vangogih/FastMigrations.Json.Net/actions/workflows/release.yaml)
 [![](https://vangogih.github.io/FastMigrations.Json.Net/badge_linecoverage.svg)](https://vangogih.github.io/FastMigrations.Json.Net/)
