@@ -67,7 +67,7 @@ find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframewo
 #### Install via .NET CLI
 
 - ```csharp
-  dotnet add package FastMigrations.Json --version 1.0.2
+  dotnet add package FastMigrations.Json --version 1.0.3
   ```
 
 #### Install manually with .csproj
@@ -77,7 +77,7 @@ find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframewo
 
 - ```csharp
   <ItemGroup>
-    <PackageReference Include="FastMigrations.Json" Version="1.0.2" />
+    <PackageReference Include="FastMigrations.Json" Version="1.0.3" />
   </ItemGroup>
   ```
 
@@ -93,7 +93,7 @@ Requires:
 2. Add this line below the "dependencies":
 
 - ```json title="Packages/manifest.json"
-    "io.vangogih.fastmigrations": "https://github.com/vangogih/FastMigrations.Json.Net.git?path=FastMigrations.Unity/Assets/FastMigrations#1.0.2",
+    "io.vangogih.fastmigrations": "https://github.com/vangogih/FastMigrations.Json.Net.git?path=FastMigrations.Unity/Assets/FastMigrations#1.0.3",
   ```
 
 3. UPM should now install the package.

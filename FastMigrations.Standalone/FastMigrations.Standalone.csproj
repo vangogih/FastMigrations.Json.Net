@@ -11,7 +11,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
         <!-- Package information -->
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
         <PackageId>FastMigrations.Json</PackageId>
         <Title>Vangogih.FastMigration.Json</Title>
         <Product>Fast Migrations Json .NET</Product>
