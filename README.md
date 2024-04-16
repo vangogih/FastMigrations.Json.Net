@@ -25,25 +25,15 @@ Provides an efficient way to write json file migrations for `Unity` and `dotnet`
 - Small code size: Few internal types and few .callvirt.
 - Immutable: Thread safety and robustness.
 
-<!-- TOC -->
-  * [Installation](#installation)
-    * [.NET](#net)
-      * [Install via .NET CLI](#install-via-net-cli)
-      * [Install manually with .csproj](#install-manually-with-csproj)
-    * [Unity](#unity)
-      * [Install via UPM (using Git URL)](#install-via-upm--using-git-url-)
-      * [Install via OpenUPM](#install-via-openupm)
-      * [Install manually (using .unitypackage)](#install-manually--using-unitypackage-)
-  * [TL;DR](#tldr)
-  * [How to contribute](#how-to-contribute)
-  * [Problem](#problem)
-  * [Solution](#solution)
-    * [Implementation](#implementation)
-  * [Benchmarks](#benchmarks)
-  * [Limitations](#limitations)
-    * [Inheritance](#inheritance)
-    * [MigratorMissingMethodHandling.Ignore](#migratormissingmethodhandlingignore)
-<!-- TOC -->
+## Quickstart
+
+1. Install plugin
+2. Check `FastMigrationsConverter` xml-doc
+3. Cheers :beers:
+
+## How to contribute
+
+Just check [project](https://github.com/users/vangogih/projects/2/views/1) and assign task to yourself. Otherwise don't hesitate to [create an Issue ](https://github.com/vangogih/FastMigrations.Json.Net/issues/new)
 
 ## Installation
 
@@ -101,16 +91,6 @@ find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframewo
 1. Download the .unitypackage from [releases](https://github.com/vangogih/FastMigrations.Json.Net/releases) page.
 2. Open FastMigrations.Json.Net.x.x.x.unitypackage
 
-## TL;DR
-
-1. Install plugin
-2. Check `FastMigrationsConverter` xml-doc
-3. Cheers :beers:
-
-## How to contribute
-
-Just check [project](https://github.com/users/vangogih/projects/2/views/1) and assign task to yourself. Otherwise don't hesitate to [create an Issue ](https://github.com/vangogih/FastMigrations.Json.Net/issues/new)
-
 ## Problem
 
 Let's imagine you have a beautiful game released in Google Play or AppStore. In the game you save data in format:
@@ -161,7 +141,6 @@ Implement algorithm how calls a chain of methods in a correct order according to
 ### Implementation
 
 1. Mark your class to migrate with attribute `Migratable`
-```csharp
 ```csharp
 [Migratable(1)]
 public class PlayerData
@@ -226,26 +205,30 @@ DefaultJob : .NET 5.0.17 (5.0.1722.21314), X64 RyuJIT AVX2
 ```
 
 
-| Method                             |         Mean |     Error |    StdDev |                    Ratio | Allocated |              Alloc Ratio |
-|------------------------------------|-------------:|----------:|----------:|-------------------------:|----------:|-------------------------:|
-| Complex_Base_Deserialize           |   5,932.7 ns |  46.66 ns |  43.65 ns |                     1.00 |   3.42 KB |                     1.00 |
-| Complex_Weingartner_Deserialize    | 107,878.6 ns | 577.95 ns | 482.62 ns |         *(before) 18.20* |  42.71 KB |         *(before) 12.48* |
-| Complex_FastMigrations_Deserialize |  16,394.8 ns |  79.16 ns |  66.10 ns |  *(after **x6.5**) 2.77* |   9.24 KB | *(after **x4.62**) 2.70* |
-|                                    |              |           |           |                          |           |                          |
-| Complex_Base_Serialize             |   3,510.7 ns |  27.62 ns |  25.84 ns |                     1.00 |   1.94 KB |                     1.00 |
-| Complex_Weingartner_Serialize      |  88,219.1 ns | 586.89 ns | 520.26 ns |         *(before) 25.13* |  34.63 KB |         *(before) 17.87* |
-| Complex_FastMigrations_Serialize   |  12,947.7 ns |  34.35 ns |  28.68 ns | *(after **x6.81**) 3.69* |   8.19 KB | *(after **x4.22**) 4.23* |
-|                                    |              |           |           |                          |           |                          |
-| Simple_Base_Deserialize            |   1,319.9 ns |   7.77 ns |   6.49 ns |                     1.00 |   2.61 KB |                     1.00 |
-| Simple_Weingartner_Deserialize     |  22,472.3 ns |  91.40 ns |  81.02 ns |        *(before)  17.02* |  10.86 KB |         *(before)  4.16* |
-| Simple_FastMigrations_Deserialize  |   3,447.3 ns |  19.20 ns |  17.02 ns | *(after **x6.52**) 2.61* |   4.05 KB | *(after **x2.68**) 1.55* |
-|                                    |              |           |           |                          |           |                          |
-| Simple_Base_Serialize              |     785.6 ns |   3.88 ns |   3.63 ns |                     1.00 |   1.35 KB |                     1.00 |
-| Simple_Weingartner_Serialize       |  16,380.1 ns | 107.72 ns |  95.49 ns |        *(before)  20.86* |   8.07 KB |         *(before)  5.97* |
-| Simple_FastMigrations_Serialize    |   2,702.5 ns |  18.90 ns |  17.68 ns | *(after **x6.06**) 3.44* |   2.88 KB | *(after **x2.80**) 2.13* |
+| Method                             |       Mean |    StdDev |                    Ratio | Allocated |              Alloc Ratio |
+|------------------------------------|-----------:|----------:|-------------------------:|----------:|-------------------------:|
+| Complex_Base_Deserialize           |   5,932 ns |  43.65 ns |                     1.00 |   3.42 KB |                     1.00 |
+| Complex_Weingartner_Deserialize    | 107,878 ns | 482.62 ns |         *(before) 18.20* |  42.71 KB |         *(before) 12.48* |
+| Complex_FastMigrations_Deserialize |  16,394 ns |  66.10 ns |  *(after **x6.5**) 2.77* |   9.24 KB | *(after **x4.62**) 2.70* |
+|                                    |            |           |                          |           |                          |
+| Complex_Base_Serialize             |   3,510 ns |  25.84 ns |                     1.00 |   1.94 KB |                     1.00 |
+| Complex_Weingartner_Serialize      |  88,219 ns | 520.26 ns |         *(before) 25.13* |  34.63 KB |         *(before) 17.87* |
+| Complex_FastMigrations_Serialize   |  12,947 ns |  28.68 ns | *(after **x6.81**) 3.69* |   8.19 KB | *(after **x4.22**) 4.23* |
+|                                    |            |           |                          |           |                          |
+| Simple_Base_Deserialize            |   1,319 ns |   6.49 ns |                     1.00 |   2.61 KB |                     1.00 |
+| Simple_Weingartner_Deserialize     |  22,472 ns |  81.02 ns |        *(before)  17.02* |  10.86 KB |         *(before)  4.16* |
+| Simple_FastMigrations_Deserialize  |   3,447 ns |  17.02 ns | *(after **x6.52**) 2.61* |   4.05 KB | *(after **x2.68**) 1.55* |
+|                                    |            |           |                          |           |                          |
+| Simple_Base_Serialize              |     785 ns |   3.63 ns |                     1.00 |   1.35 KB |                     1.00 |
+| Simple_Weingartner_Serialize       |  16,380 ns |  95.49 ns |        *(before)  20.86* |   8.07 KB |         *(before)  5.97* |
+| Simple_FastMigrations_Serialize    |   2,702 ns |  17.68 ns | *(after **x6.06**) 3.44* |   2.88 KB | *(after **x2.80**) 2.13* |
 
 ## Limitations
 
 ### Inheritance
 
 ### MigratorMissingMethodHandling.Ignore
+
+# Contact
+Author: Aleksei Kozorezov aka vangogih
+[Telegram blog (RUS)](https://t.me/+n5I3OOpd6-0zOTMy)
