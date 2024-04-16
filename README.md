@@ -25,6 +25,28 @@ Provides an efficient way to write json file migrations for `Unity` and `dotnet`
 - Small code size: Few internal types and few .callvirt.
 - Immutable: Thread safety and robustness.
 
+## Table of contents
+<!-- TOC -->
+  * [Quickstart](#quickstart)
+  * [How to contribute](#how-to-contribute)
+  * [Installation](#installation)
+    * [.NET NuGet](#net-nuget)
+      * [Install via .NET CLI](#install-via-net-cli)
+      * [Install manually with .csproj](#install-manually-with-csproj)
+    * [Unity](#unity)
+      * [Install via UPM (using Git URL)](#install-via-upm--using-git-url-)
+      * [Install via OpenUPM](#install-via-openupm)
+      * [Install manually (using .unitypackage)](#install-manually--using-unitypackage-)
+  * [Problem](#problem)
+  * [Solution](#solution)
+    * [Implementation](#implementation)
+  * [Features](#features)
+    * [Inheritance](#inheritance)
+    * [MigratorMissingMethodHandling.Ignore](#migratormissingmethodhandlingignore)
+  * [Benchmarks](#benchmarks)
+* [Contact](#contact)
+<!-- TOC -->
+
 ## Quickstart
 
 1. Install plugin
@@ -37,7 +59,7 @@ Just check [project](https://github.com/users/vangogih/projects/2/views/1) and a
 
 ## Installation
 
-### .NET
+### .NET NuGet
 
 Compatible with `.NET Standard 2.0`. Full compatibility matrix you will
 find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframeworks-body-tab)
@@ -61,9 +83,9 @@ find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframewo
 
 ### Unity
 
-*Requires Unity 2019.4+*
-
-*[Newtonsoft Json Unity Package 2.0.2](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@2.0/manual/index.html)*
+Requires:
+- **Unity 2019.4+**
+- **[Newtonsoft Json Unity Package 2.0.2](https://docs.unity3d.com/Packages/com.unity.nuget.newtonsoft-json@2.0/manual/index.html)**
 
 #### Install via UPM (using Git URL)
 
@@ -80,7 +102,7 @@ find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframewo
 
 1. The package is available on the [openupm registry](https://openupm.com/packages/io.vangogih.fastmigrations/). It's recommended to install
    it via [openupm-cli](https://github.com/openupm/openupm-cli).
-2. Execute the openum command.
+2. Execute the `openupm` command.
 
 - ```
       openupm add io.vangogih.fastmigrations
@@ -93,7 +115,7 @@ find [here](https://www.nuget.org/packages/FastMigrations.Json/#supportedframewo
 
 ## Problem
 
-Let's imagine you have a beautiful game released in Google Play or AppStore. In the game you save data in format:
+Let's imagine you have a beautiful game released in Google Play or AppStore. In the game you save player data in format:
 
 ```json
 {
@@ -113,7 +135,7 @@ public class PlayerData
 ```
 
 And with the next release game designers come to you and ask to add new types of currencies into the game. 
-And you decide to change the structure of `PlayerData` and aggregate all currencies as Dictionary.
+And you decide to change the structure of `PlayerData` and aggregate all currencies as `Dictionary`.
 
 ```csharp
 public class PlayerData
@@ -132,16 +154,22 @@ And now you have 2 problems:
 
 And if you want to save back compatibility with previous version you have to migrate your json file from the first version to N (you current version). 
 
-Otherwise player from version v1.0.0 won't be compatible with vN.0.0. And this plugin solves the problem effectively.  
+Otherwise player from version v1.0.0 won't be compatible with vN.0.0. 
+
+And this plugin effectively solves the problem.
 
 ## Solution
 
-Implement algorithm how calls a chain of methods in a correct order according to current json file version.
+Implement algorithm how calls a chain of methods in a correct order according to current json file version. 
+
+- Version 0 is default and can be ignored.
+- If json has version 3 but current version is 10, plugin have to call methods from 4 to 10
 
 ### Implementation
 
 1. Mark your class to migrate with attribute `Migratable`
 ```csharp
+// [Migratable(0)] you don't have to implement Migrate_0. For simplicity you can think that all classes have version 0 as default
 [Migratable(1)]
 public class PlayerData
 {
@@ -150,33 +178,33 @@ public class PlayerData
 ```
 2. Implement method with signature `private/protected static JObject Migrate_1(JObject rawJson)`
 ```csharp
-    [Migratable(1)]
-    public class PlayerData
-    {
-        public Dictionary<Currency, int> Wallet;
-    
-        private static JObject Migrate_1(JObject rawJson)
-        {
-            var oldSoftToken = rawJson["soft"];
-            var oldHardToken = rawJson["hard"];
-        
-            var oldSoftValue = oldSoftToken.ToObject<int>();
-            var oldHardValue = oldHardToken.ToObject<int>();
-            
-            var newWallet = new Dictionary<Currency, int>
-            {
-                {Currency.Soft, oldSoftValue},
-                {Currency.Hard, oldHardValue}
-            };
-            
-            rawJson.Remove("soft"); // bonus: we can remove old fields from json file
-            rawJson.Remove("hard");
-            
-            rawJson.Add("Wallet", JToken.FromObject(newWallet));
+[Migratable(1)]
+public class PlayerData
+{
+    public Dictionary<Currency, int> Wallet;
 
-            return rawJson;
-        }
+    private static JObject Migrate_1(JObject rawJson)
+    {
+        var oldSoftToken = rawJson["soft"];
+        var oldHardToken = rawJson["hard"];
+    
+        var oldSoftValue = oldSoftToken.ToObject<int>();
+        var oldHardValue = oldHardToken.ToObject<int>();
+        
+        var newWallet = new Dictionary<Currency, int>
+        {
+            {Currency.Soft, oldSoftValue},
+            {Currency.Hard, oldHardValue}
+        };
+        
+        rawJson.Remove("soft"); // bonus: we can remove old fields from json file
+        rawJson.Remove("hard");
+        
+        rawJson.Add("Wallet", JToken.FromObject(newWallet));
+
+        return rawJson;
     }
+}
 ```
 3. Add `FastMigrationsConverter` to `JsonSerializerSettings.Converters` or as an argument to `JsonConvert.SerializeObject/JsonConvert.Deserialize<T>`
 ```csharp
@@ -192,6 +220,75 @@ var result = JsonConvert.SerializeObject(jsonString, migrator);
 ```
 4. Profit :beers:
 
+## Features
+For Unity to avoid `Migrate_` methods deletion `Migratable` attribute is inherited from `UnityEngine.Scripting.PreserveAttribute`. Import plugin directly and remove this 
+
+### Inheritance
+Inheritance for attributes is turned off. It means that you can mark parent and child class with attribute and ONLY methods on child will be called. See also [test case](https://github.com/vangogih/FastMigrations.Json.Net/blob/46681dfe41b0a3246431f1d9080eb8478c9c5a3d/FastMigrations.Unity/Assets/FastMigrations/Tests/EditorMode/FastMigrationConverterTests.cs#L176)
+
+1. Mark your `Migrate_` method on parent as `protected`
+2. Mark child class with `Migratable` attribute
+3. Call from child's method parent method
+
+Example:
+```csharp
+[Migratable(1)]
+public class Parent
+{
+    protected static JObject Migrate_1(JObject jsonObj)
+    {
+        MethodCallHandler.RegisterMethodCall(typeof(ParentMock), nameof(Migrate_1));
+        return jsonObj;
+    }
+}
+
+[Migratable(2)]
+public class ChildV2 : Parent
+{
+    private static JObject Migrate_1(JObject jsonObj)
+    {
+        jsonObj = ParentMock.Migrate_1(jsonObj);
+        return jsonObj;
+    }
+
+    private static JObject Migrate_2(JObject jsonObj)
+    {
+        MethodCallHandler.RegisterMethodCall(typeof(ChildV10Mock), nameof(Migrate_2));
+        return jsonObj;
+    }
+}
+```
+
+### MigratorMissingMethodHandling.Ignore
+If you create `FastMigrationsConverter` with this argument it will ignore absence of `Migrate_N` methods.
+
+**Warning:** Plugin iterates from current version to N and EVERY TIME try to find method `Migrate_`. If you skip 5 methods, `System.Type.GetMethod` will be called 5 times for nothing. It can drop performance dramatically. 
+I recommend to increase version +1 and use `MigratorMissingMethodHandling.ThrowException` instead.
+
+Example:
+```csharp
+var migrator1 = new FastMigrationsConverterMock(MigratorMissingMethodHandling.ThrowException); // will throw MigrationException because there is no 3..9 methods
+var migrator2 = new FastMigrationsConverterMock(MigratorMissingMethodHandling.Ignore); // will ignore absence of 3..9 methods
+[Migratable(10)]
+public class ChildV10
+{
+    private static JObject Migrate_1(JObject jsonObj)
+    {
+        return jsonObj;
+    }
+
+    private static JObject Migrate_2(JObject jsonObj)
+    {
+        return jsonObj;
+    }
+
+    private static JObject Migrate_10(JObject jsonObj)
+    {
+        return jsonObj;
+    }
+}
+```
+
 ## Benchmarks
 
 I took idea from unsupported plugin [Migrations.Json.Net](https://github.com/Weingartner/Migrations.Json.Net/tree/master) 
@@ -203,7 +300,6 @@ AMD Ryzen 7 4800HS with Radeon Graphics, 1 CPU, 16 logical and 8 physical cores
 .NET SDK 8.0.100-rc.2.23502.2
 DefaultJob : .NET 5.0.17 (5.0.1722.21314), X64 RyuJIT AVX2
 ```
-
 
 | Method                             |       Mean |    StdDev |                    Ratio | Allocated |              Alloc Ratio |
 |------------------------------------|-----------:|----------:|-------------------------:|----------:|-------------------------:|
@@ -223,12 +319,6 @@ DefaultJob : .NET 5.0.17 (5.0.1722.21314), X64 RyuJIT AVX2
 | Simple_Weingartner_Serialize       |  16,380 ns |  95.49 ns |        *(before)  20.86* |   8.07 KB |         *(before)  5.97* |
 | Simple_FastMigrations_Serialize    |   2,702 ns |  17.68 ns | *(after **x6.06**) 3.44* |   2.88 KB | *(after **x2.80**) 2.13* |
 
-## Limitations
-
-### Inheritance
-
-### MigratorMissingMethodHandling.Ignore
-
 # Contact
-Author: Aleksei Kozorezov aka vangogih
-[Telegram blog (RUS)](https://t.me/+n5I3OOpd6-0zOTMy)
+- Author: Aleksei Kozorezov aka vangogih
+- [Telegram blog (RUS)](https://t.me/+n5I3OOpd6-0zOTMy)
